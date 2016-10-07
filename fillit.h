@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/06 11:27:36 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/06 14:31:31 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,9 @@ typedef	struct	s_piece
 	int			b4y;
 }				t_piece;
 
+t_piece			**ft_input_validator(char *str, int	*piecenbr);
+
+char			**ft_fillit(t_piece **pieces, int piecenbr);
+
+void	ft_print(char **puzzle);
 #endif

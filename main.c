@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/06 14:23:48 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/06 14:23:51 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/06 14:28:49 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,9 @@ int	main(int argc, char **argv)
 
 	if (argc == 2)	
 	{
-		pieces = input_validator(argv[1], &piecenbr);
-		puzzle = fillit(pieces, piecenbr);	
+		pieces = ft_input_validator(argv[1], &piecenbr);
+		puzzle = ft_fillit(pieces, piecenbr);	
+		ft_print(puzzle);
 	}
 	else
 		ft_fillit_usage;
