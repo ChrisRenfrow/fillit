@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/07 11:27:57 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/07 14:28:23 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ enum					e_tetr
 
 typedef	struct			s_piece
 {
-	int					order;
+	unsigned char		order;
 	unsigned long long	bitmap;
 }						t_piece;
 
