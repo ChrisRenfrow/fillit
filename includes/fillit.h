@@ -6,14 +6,14 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/06 14:31:31 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/07 11:27:57 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
 
-enum			e_tetr
+enum					e_tetr
 {
 	SQUARE,
 	VERT_I,
@@ -36,22 +36,15 @@ enum			e_tetr
 	LEFT_T,
 };
 
-typedef	struct	s_piece
+typedef	struct			s_piece
 {
-	int			order;
-	int			b1x;
-	int			b1y;
-	int			b2x;
-	int			b2y;
-	int			b3x;
-	int			b3y;
-	int			b4x;
-	int			b4y;
-}				t_piece;
+	int					order;
+	unsigned long long	bitmap;
+}						t_piece;
 
-t_piece			**ft_input_validator(char *str, int	*piecenbr);
+t_piece					**ft_input_validator(char *str, int	*piecenbr);
 
-char			**ft_fillit(t_piece **pieces, int piecenbr);
+char					**ft_fillit(t_piece **pieces, int piecenbr);
 
-void	ft_print(char **puzzle);
+void					ft_print(char **puzzle);
 #endif
