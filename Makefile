@@ -6,7 +6,7 @@
 #    By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/07 09:42:52 by crenfrow          #+#    #+#              #
-#    Updated: 2016/10/07 11:19:42 by crenfrow         ###   ########.fr        #
+#    Updated: 2016/10/07 13:04:35 by crenfrow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -26,7 +26,7 @@ all: $(NAME)
 $(NAME): $(SOURCES) | $(BUILD)
 		$(CC) $(FLAGS) $(SOURCES) -I $(INCLUDES) -o $(NAME) -L$(LIBDIR) -l$(LIBNAME)
 
-build/%.o: %.c | build
+build/%.o: src/%.c | build
 		$(CC) $(FLAGS) -I $(INCLUDES) -c $^ -o $@
 
 clean:
