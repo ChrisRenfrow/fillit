@@ -6,34 +6,34 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/07 14:28:23 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/08 13:39:25 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
 
-enum					e_tetr
+enum					e_block
 {
-	SQUARE,
-	VERT_I,
-	HORZ_I,
-	HORZ_Z,
-	VERT_Z,
-	HORZ_RZ,
-	VERT_RZ,
-	VERT_L,
-	HORZ_L,
-	UPDN_L,
-	UPDN_HL,
-	VERT_RL,
-	HORZ_RL,
-	UPDN_RL,
-	UPDN_HRL,
-	T,
-	RIGHT_T,
-	UPDN_T,
-	LEFT_T,
+	SQUARE, 	//SQUARE IS SQUARE
+	VRT_I,		//VERTICAL 'I' BLOCK
+	HRZ_I,		//HORIZONTAL 'I' BLOCK
+	HRZ_ZE,		//HORIZONTAL 'Z' BLOCK
+	VER_ZE,		//VERTICAL 'Z' BLOCK
+	HRZ_ES,		//HORIZONTAL 'S' BLOCK
+	VER_ES,		//VERTICAL 'S' BLOCK
+	UP_ELL,		//UP-FACING 'L' BLOCK
+	RT_ELL,		//RIGHT-FACING 'L' BLOCK
+	DN_ELL,		//DOWN-FACING 'L' BLOCK
+	LT_ELL,		//LEFT-FACING 'L' BLOCK
+	UP_JAY,		//UP-FACING 'J' BLOCK
+	RT_JAY,		//RIGHT-FACING 'J' BLOCK
+	DN_JAY,		//DOWN-FACING 'J' BLOCK
+	LT_JAY,		//LEFT-FACING 'J' BLOCK
+	UP_TEE,		//UP-FACING 'T' BLOCK
+	RT_TEE,		//RIGHT-FACING 'T' BLOCK
+	DN_TEE,		//DOWN-FACING 'T' BLOCK
+	LT_TEE,		//LEFT-FACING 'T' BLOCK
 };
 
 typedef	struct			s_piece
