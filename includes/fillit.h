@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/08 16:57:20 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/09 16:01:23 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ const char g_blockdefine[19][] = {	{"##..##"}, 		//SQ
 									{"#...##..#"},		//RT T
 									{"###..#"},			//DN T
 									{".#..##...#"} };	//LT T
-
 
 enum					e_block
 {
@@ -61,7 +60,7 @@ enum					e_block
 
 typedef	struct			s_piece
 {
-	unsigned char		order;
+	unsigned char		label;
 	unsigned long long	bitmap;
 }						t_piece;
 

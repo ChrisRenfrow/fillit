@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/21 10:10:08 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/05 13:13:32 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/09 10:57:14 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,14 @@ void				*ft_memdup(const void *content, size_t content_size);
 void				*ft_memccpy(void *dst, const void *src, int c, size_t n);
 void				*ft_memmove(void *dst, const void *src, size_t len);
 void				*ft_memchr(const void *s, int c, size_t n);
+void				*ft_realloc(void *buf, size_t *buf_cap);
 void				*ft_memalloc(size_t size);
 
 size_t				ft_strlen(const char *str);
 size_t				ft_strlcat(char *dst, const char *str, size_t size);
 size_t				ft_lstsize(t_list *begin_list);
+
+unsigned long long	ft_power(unsigned long long nbr, int power);
 
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
@@ -95,5 +98,7 @@ void				ft_lstadd(t_list **alst, t_list *element);
 void				ft_lstiter(t_list *lst, void (*f)(t_list *elem));
 void				ft_lstadd_back(t_list **alst, t_list *element);
 void				ft_negflag(int *n, int *neg);
+void				ft_delcontent(void *content, size_t content_size);
+void				ft_putbits(unsigned long long block, int bit_size);
 
 #endif
