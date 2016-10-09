@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/21 10:10:08 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/09 10:57:14 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/09 16:39:12 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char				*ft_strsub(char const *s, unsigned int start, size_t len);
 char				*ft_strjoin(char const *s1, char const *s2);
 char				*ft_strtrim(char const *s1);
 char				*ft_itoa(int n);
+char				*ft_itoa_base(int n, int base);
 
 void				*ft_memset(void *b, int c, size_t len);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
@@ -53,11 +54,11 @@ void				*ft_memchr(const void *s, int c, size_t n);
 void				*ft_realloc(void *buf, size_t *buf_cap);
 void				*ft_memalloc(size_t size);
 
+unsigned long long	ft_power(unsigned long long nbr, int power);
+
 size_t				ft_strlen(const char *str);
 size_t				ft_strlcat(char *dst, const char *str, size_t size);
 size_t				ft_lstsize(t_list *begin_list);
-
-unsigned long long	ft_power(unsigned long long nbr, int power);
 
 int					ft_isalpha(int c);
 int					ft_isdigit(int c);
