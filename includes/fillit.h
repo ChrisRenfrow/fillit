@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/08 13:39:25 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/09 12:10:32 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ enum					e_block
 
 typedef	struct			s_piece
 {
-	unsigned char		order;
+	unsigned char		label;
 	unsigned long long	bitmap;
 }						t_piece;
 
