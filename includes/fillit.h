@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/09 16:01:23 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/10 11:08:52 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,10 @@ enum					e_block
 typedef	struct			s_piece
 {
 	unsigned char		label;
-	unsigned long long	bitmap;
+	unsigned long long	row1;
+	unsigned long long	row2;
+	unsigned long long	row3;
+	unsigned long long	row4;
 }						t_piece;
 
 t_piece					**ft_input_validator(char *str, int	*piecenbr);
