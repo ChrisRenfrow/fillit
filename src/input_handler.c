@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/11 21:16:49 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/11 22:08:09 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,10 @@ int is_valid_block(char *input)
 
 char **build_block(char *ref, char *input)
 {
+	char **block_array = NULL;
 	//Build and add t_piece to array of pointers
+	
+	return (block_array);
 }
 
 int read_file(char *filename)
