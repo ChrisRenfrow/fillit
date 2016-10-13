@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/12 19:27:54 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/12 23:54:48 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,9 @@
 #include "fillit.h"
 
 #define MAX_BUFFER 4096
-
+#define B(i) g_blockdefine[i]
+#define C(x, y) ft_strcmp(x, y)
+#define IS_PIECE(input, index)while(B(index)){if(C(input, B(index)){index++;})}
 // ADD TO LIBRARY AT YOUR DISCRETION
 // Counts instances of specific char in string and returns the int value of 
 // occurences
@@ -93,7 +95,15 @@ int open_file(char *filename)
 		return (fd);
 }
 
-t_piece *build_pieces(char *filename)
+t_piece	*make_piece(char *input, int label)
+{
+	t_piece *piece = (t_piece *)malloc(sizeof(t_piece));
+	piece->label = label;
+	piece->placed = 0;
+	return (piece);
+}
+
+t_piece *process_input(char *filename)
 {
 	int 	fd;
 	int		ret;
@@ -110,7 +120,7 @@ t_piece *build_pieces(char *filename)
 		return (NULL);
 	}
 	pieces = (t_piece *)ft_memset(pieces, 0, ct_pieces(buffer) + 1);
-
+	
 
 	return (pieces);
 }
