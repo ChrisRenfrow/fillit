@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/12 02:05:53 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/12 19:23:37 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,15 @@ enum					e_block
 
 typedef	struct			s_piece
 {
-	unsigned char		label;
-	unsigned long long	row1;
-	unsigned long long	row2;
-	unsigned long long	row3;
-	unsigned long long	row4;
+	unsigned char		label;		// Ex: 'A'
+	unsigned int		placed;		// 1 or 0 to represent state
+	unsigned long long	rows[4];	// Bit value of each piece's row
+	unsigned long long	anchor[4];	// Anchor value for integrity
 }						t_piece;
 
-t_piece					**ft_input_validator(char *str, int	*piecenbr);
+int 	ct_pieces(char *input);
+int 	is_valid_block(char *input);
+char	**ft_fillit(t_piece **pieces, int piecenbr);
+void	ft_print(char **puzzle);
 
-char					**ft_fillit(t_piece **pieces, int piecenbr);
-
-void					ft_print(char **puzzle);
 #endif

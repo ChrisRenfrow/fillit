@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/11 22:08:09 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/12 19:27:54 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,37 +80,7 @@ char	*ft_strctrim(char *str, char c)
 		return (NULL);
 }
 
-// Checks to see if given input segment is a valid block by processing 
-// and comparing the data to stored block items. If it is a valid block, 
-// it will return the index which indicates it's appropriate block, else 
-// it returns -1
-int is_valid_block(char *input)
-{
-	int i;
-	char *trimmed;
-
-	if (input)
-	{
-		trimmed = ft_strchrrmv(trimmed, '\n');
-		input = ft_strctrim(input, '.');
-		while (i <= 19)
-		{
-			if (ft_strcmp(trimmed, g_blockdefine[i]))
-				return (i);
-		}
-	}
-	return (-1);
-}
-
-char **build_block(char *ref, char *input)
-{
-	char **block_array = NULL;
-	//Build and add t_piece to array of pointers
-	
-	return (block_array);
-}
-
-int read_file(char *filename)
+int open_file(char *filename)
 {
 	int fd;
 	fd = open(filename, O_RDONLY);
@@ -120,8 +90,27 @@ int read_file(char *filename)
 		return (0);
 	}
 	else
+		return (fd);
+}
+
+t_piece *build_pieces(char *filename)
+{
+	int 	fd;
+	int		ret;
+	char 	buffer[MAX_BUFFER + 1];
+	t_piece *pieces = NULL;
+
+	fd = open_file(filename);
+	if (fd == 0)
+		return (NULL);
+	ret = read(fd, buffer, MAX_BUFFER);
+	if (ret == -1)
 	{
-		
+		ft_putstr("Read error occured.\n");
+		return (NULL);
 	}
-	return (1);
+	pieces = (t_piece *)ft_memset(pieces, 0, ct_pieces(buffer) + 1);
+
+
+	return (pieces);
 }
