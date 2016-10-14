@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/12 23:54:48 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/13 19:09:42 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,7 @@
 #include "fillit.h"
 
 #define MAX_BUFFER 4096
-#define B(i) g_blockdefine[i]
-#define C(x, y) ft_strcmp(x, y)
-#define IS_PIECE(input, index)while(B(index)){if(C(input, B(index)){index++;})}
+
 // ADD TO LIBRARY AT YOUR DISCRETION
 // Counts instances of specific char in string and returns the int value of 
 // occurences
@@ -39,7 +37,7 @@ int ft_strctchr(char *str, char c)
 
 // PLEASE ADD TO LIBRARY
 // Removes char from string and returns new string
-char	*ft_strchrrmv(char *str, char c)
+char	*ft_strchrrm(char *str, char c)
 {
 	int newlen;
 	int i;
@@ -97,6 +95,7 @@ int open_file(char *filename)
 
 t_piece	*make_piece(char *input, int label)
 {
+	(void)input;
 	t_piece *piece = (t_piece *)malloc(sizeof(t_piece));
 	piece->label = label;
 	piece->placed = 0;
@@ -121,6 +120,5 @@ t_piece *process_input(char *filename)
 	}
 	pieces = (t_piece *)ft_memset(pieces, 0, ct_pieces(buffer) + 1);
 	
-
 	return (pieces);
 }
