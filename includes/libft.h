@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/09/21 10:10:08 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/09 19:08:17 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/14 12:15:44 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ char				*ft_strrev(char	*str);
 char				*ft_bitstoa(unsigned long long block, int bit_size);
 char				*ft_itoa_base(int n, int base);
 char				*ft_itoa(int n);
+char				*ft_strchrrmv(char *str, char c);
+char				*ft_strctrim(char *str, char c);
 
 void				*ft_memset(void *b, int c, size_t len);
 void				*ft_memcpy(void *dst, const void *src, size_t n);
@@ -78,6 +80,7 @@ int					ft_atoi(const char *str);
 int					ft_memcmp(const void *s1, const void *s2, size_t n);
 int					ft_strnequ(char const *s1, char const *s2, size_t n);
 int					ft_strequ(char const *s1, char const *s2);
+int					ft_strctchr(char *str, char c);
 
 unsigned int		ft_splcount(const void *v, char c, size_t len);
 
