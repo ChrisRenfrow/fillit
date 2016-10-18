@@ -6,38 +6,15 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/14 11:56:47 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/16 17:06:56 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef FILLIT_H
 # define FILLIT_H
 
-# define B(i) g_blockdefine[i]
-# define C(x, y) ft_strcmp(x, y)
-# define IS_PIECE(input, index)while(B(index)){if(C(input, B(index))){index++;}}
-
-
 // Ordered by weight of candidacy
-const char *g_blockdefine[] = {		"#...#...#...#", 	//VT I
-									"####",				//HZ I
-									"##..##", 			//SQ
-									"###.#",			//RT L
-									"##..#...#",		//DN J
-									"##...##",			//VT Z
-									"#...##...#",		//HZ Z
-									"#...##..#",		//VT S
-									"##.##",			//HZ S
-									"#...#...##",		//UP L	
-									"##..#..#",			//DN L
-									"#.###",			//LT L
-									"#...#..##",      	//UP J
-									"#...###",        	//RT J
-									"###...#",			//LT J
-									"#..###",			//UP T
-									"#...##..#",		//RT T
-									"###..#",			//DN T
-									".#..##...#" };		//LT T
+extern char *g_blockdefine[20];
 
 typedef	struct			s_piece
 {
