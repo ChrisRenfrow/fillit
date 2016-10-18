@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   border_check.c                                     :+:      :+:    :+:   */
+/*   move_piece.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/10 19:27:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/12 21:15:15 by kdavis           ###   ########.fr       */
+/*   Created: 2016/10/18 09:51:30 by kdavis            #+#    #+#             */
+/*   Updated: 2016/10/18 09:51:34 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,33 +20,56 @@
 ** we have been 
 */
 
-int	g_sq_size;
-int	g_shift;		//g_shift is the offset each piece has in the puzzle
-
-t_ull	*move_bits(t_piece *p, t_ull *map, int eb_nbr, int pnbr)
+t_ull	*move_bits(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
 {
 	int		pu;
-	int		pl;
-	t_ull	brd;
 	
-	brd = ft_power(2, g_sq_size);
-	pl = 0;
-	pu = 0;
-	while (pu < pnbr)
-		if (p[pu++].placed != 1)
-			pl++;
-	while (--pu >= 0)
+	ft_putendl("14");//
+	pu = -1;
+	ft_putendl("15");//
+	while (++pu <  l.pnbr)
 		if (p[pu].placed != 1)
 		{
-			if (p[pu].r1 / brd == 1 || p[pu].r2 / brd == 1 || p[pu].r3 / brd == 1)
-			{
-				if (pl-- == 0)
-					return (move_next_line(p, map, eb_nbr, pnbr));
-			}
+			ft_putstr(" 16:");//
+			ft_putstr(" g_shift:");//
+			ft_putnbr(l.shift);//
+			ft_putstr(" square size:");//
+			ft_putnbr(l.sq_size);//
+			ft_putchar('\n');//
+			if (l.shift >= l.sq_size)
+				return (move_next_line(p, map, eb_nbr, l));
 			else
-				return (shift_pieces(p, map, eb_nbr, pnbr));
+			{
+				ft_putendl("18");//
+				return (shift_pieces(p, map, eb_nbr, l));
+			}
 		}
 	return (map);
+}
+
+/*
+** Count_empty counts the number of empty blocks in the row that was just completed
+** and adds it to the total eb count.
+*/
+
+int		count_empty(t_ull row, t_puzz l)
+{
+	int	reb;
+	int	brd;
+
+	reb = 0;
+	brd = 1 << l.sq_size;
+	while (brd != 1)
+	{
+		if ((row & 1) == 0)
+			reb++;
+		row = row >> 1;
+		brd = brd >> 1;
+	}
+		ft_putstr("Count_empty count:");//
+		ft_putnbr(reb); //
+		ft_putchar('\n');//
+	return (reb);
 }
 
 /*
@@ -54,21 +77,51 @@ t_ull	*move_bits(t_piece *p, t_ull *map, int eb_nbr, int pnbr)
 ** as move all unused pieces back to their starting values.
 */
 
-t_ull	*move_next_line(t_piece *p, t_ull *map, int eb_nbr, int pnbr)
+t_ull	*move_next_line(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
 {
-	int	pu;
+	int		pu;
+	int		i;
 
-	pu = 0;
-	while (pu < pnbr)
-		if (p[pu++].placed != 1)
+	pu = -1;
+			ft_putstr("l.shift: ");//
+			ft_putnbr(l.shift);//
+			ft_putchar('\n');//
+			ft_putendl("19 move_next_line");//
+	eb_nbr += count_empty(map[l.mrow], l);
+	while (++pu < l.pnbr)
+		if ((p[pu].placed) != 1)
 		{
-			p[pu].r1 = p[pu].a1;
-			p[pu].r2 = p[pu].a2;
-			p[pu].r3 = p[pu].a3;
-			p[pu].r4 = p[pu].a4;
-			g_shift = 0;
+			i = -1;
+			ft_putstr("Coordinates of ");//
+	 		ft_putchar(p[pu].label); //
+			ft_putstr(" before shift:");//
+			while (++i < 4)
+			{
+				ft_putnbr((int)p[pu].r[i]);//
+				ft_putchar(',');//
+				p[pu].r[i] = p[pu].a[i];
+			}
+			ft_putchar('\n');//
+			ft_putstr("Coordinates of ");//
+			ft_putchar(p[pu].label); //
+			ft_putstr(" after shift:");//
+			i = -1; //
+			while (++i < 4)//
+			{
+				ft_putnbr((int)p[pu].r[i]);//
+				ft_putchar(',');//
+			}
+			ft_putchar('\n');//
 		}
-	return (fit_pieces(p, map + 1, eb_nbr, pnbr));
+	ft_putstr("20 row number:");//
+	ft_putnbr(l.mrow);//
+	ft_putchar('\n');//
+	ft_putstr("empty block count:");//
+	ft_putnbr(eb_nbr);//
+	ft_putchar('\n');//
+	l.shift = 0;
+	l.mrow++;
+	return (fit_pieces(p, map, eb_nbr, l));
 }
 
 /*
@@ -77,19 +130,40 @@ t_ull	*move_next_line(t_piece *p, t_ull *map, int eb_nbr, int pnbr)
 ** tell if the current spot is occupied or not.
 */
 
-t_ull	*shift_pieces(t_piece *p, t_ull *map, int eb_nbr, int pnbr)
+t_ull	*shift_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
 {
 	int	pu;
+	int	i;
 
-	pu = 0;
-	while (pu < pnbr)
-		if (p[pu++].placed != 1)
+	pu = -1;
+	ft_putendl("21 shift_pieces");//
+	while (++pu < l.pnbr)
+		if ((p[pu].placed) != 1)
 		{
-			p[pu].r1 = p[pu].r1 << 1;
-			p[pu].r2 = p[pu].r2 << 1;
-			p[pu].r3 = p[pu].r3 << 1;
-			p[pu].r4 = p[pu].r4 << 1;
-			g_shift++;
+			i = -1;
+			ft_putstr("Coordinates of ");//
+			ft_putchar(p[pu].label); //
+			ft_putstr(" before shift:");//
+			while (++i < 4)
+			{
+				ft_putnbr((int)p[pu].r[i]);
+				ft_putchar(',');
+				p[pu].r[i] = p[pu].r[i] << 1;
+
+			}
+			ft_putchar('\n');//
+			i = -1;//
+			ft_putstr("Coordinates of ");//
+			ft_putchar(p[pu].label); //
+			ft_putstr(" after shift:");//
+			while (++i < 4)//
+			{
+				ft_putnbr((int)p[pu].r[i]);//
+				ft_putchar(',');//
+			}
+			ft_putchar('\n');//
 		}
-	return (fit_pieces(p, map, eb_nbr, pnbr));
+	ft_putendl("22");//
+	l.shift++;
+	return (fit_pieces(p, map, eb_nbr, l));
 }
