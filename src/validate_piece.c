@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 18:03:53 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/18 15:26:21 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/19 12:27:59 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@ char *g_blockdefine[20];
 
 void	init_blockdefine(void)
 {	
-	g_blockdefine[0] = ft_strdup("#....#....#....#");
-	g_blockdefine[1] = ft_strdup("####");
-	g_blockdefine[2] = ft_strdup("##...##");
-	g_blockdefine[3] = ft_strdup("###..#");
-	g_blockdefine[4] = ft_strdup("##...#....#");
-	g_blockdefine[5] = ft_strdup("##....#....#");
+	g_blockdefine[0] = ft_strdup("####");
+	g_blockdefine[1] = ft_strdup("#....#....#....#");
+	g_blockdefine[2] = ft_strdup("#....###");
+	g_blockdefine[3] = ft_strdup("##...#....#");
+	g_blockdefine[4] = ft_strdup("###....#");
+	g_blockdefine[5] = ft_strdup("#....#...##");
 	g_blockdefine[6] = ft_strdup("#..###");
-	g_blockdefine[7] = ft_strdup("#...#...###");
-	g_blockdefine[8] = ft_strdup("#....#...##");
-	g_blockdefine[9] = ft_strdup("#....###");
-	g_blockdefine[10] = ft_strdup("##....#....#");
-	g_blockdefine[11] = ft_strdup("#...###");
+	g_blockdefine[7] = ft_strdup("#....#....##");
+	g_blockdefine[8] = ft_strdup("##....#....#");
+	g_blockdefine[9] = ft_strdup("##...##");
+	g_blockdefine[10] = ft_strdup("##..##");
+	g_blockdefine[11] = ft_strdup("#....##....#");
 	g_blockdefine[12] = ft_strdup("###....#");
-	g_blockdefine[13] = ft_strdup("#....###");
-	g_blockdefine[14] = ft_strdup("###....#");
-	g_blockdefine[15] = ft_strdup("#...###");
-	g_blockdefine[16] = ft_strdup("#....##...#");
-	g_blockdefine[17] = ft_strdup("###...#");
-	g_blockdefine[18] = ft_strdup("#...##....#");
+	g_blockdefine[13] = ft_strdup("#...###");
+	g_blockdefine[14] = ft_strdup("#....##...#");
+	g_blockdefine[15] = ft_strdup("###...#");
+	g_blockdefine[16] = ft_strdup("#...##....#");
+	g_blockdefine[17] = ft_strdup("##....##");
+	g_blockdefine[18] = ft_strdup("#...##...#");
 	g_blockdefine[19] = 0;	
 }
 
@@ -63,7 +63,11 @@ int	is_piece(char *input)
 	while(i < 19)
 	{
 		if(!ft_strcmp(input, g_blockdefine[i]))
+		{
+			ft_putnbr(i);
+			ft_putchar('\n');
 			return (i);
+		}	
 		i++;
 	}
 	return (-1);
