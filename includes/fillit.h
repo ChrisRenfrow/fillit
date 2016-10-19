@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/18 11:01:40 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/18 20:03:08 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@
 # define C(x, y) ft_strcmp(x, y)
 # define IS_PIECE(input, index)while(B(index)){if(C(input, B(index))){index++;}}
 
-
+/*
 // Ordered by weight of candidacy
 const char *g_blockdefine[] = {		"#...#...#...#", 	//VT I
 									"####",				//HZ I
@@ -38,16 +38,18 @@ const char *g_blockdefine[] = {		"#...#...#...#", 	//VT I
 									"#...##..#",		//RT T
 									"###..#",			//DN T
 									".#..##...#" };		//LT T
+*/
 typedef unsigned long long	t_ull;
 
 typedef	struct				s_puzzle
 {
+	int						*po;
+	int						*min_eb;
 	int						sq_size;
 	int						pnbr;
 	int						shift;
 	int						mrow;
 	int						eb_max;
-	int						*po;
 }							t_puzz;
 
 typedef	struct				s_piece
@@ -70,6 +72,7 @@ t_ull						*shift_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz l);
 t_ull						*map_maker(t_piece *pieces, t_puzz legend);
 t_ull						*eb_calculator(t_piece *pieces, t_ull *map, t_puzz l);
 void						print_row(t_ull row, int columns);
+void						print_solution(t_piece *p, t_ull *map, t_puzz l);
 
 
 int 	ct_pieces(char *input);

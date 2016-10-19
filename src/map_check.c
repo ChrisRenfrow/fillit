@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 10:26:52 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/17 12:33:17 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/18 19:31:16 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,10 +41,10 @@ static int	check_border(t_piece p, t_puzz l)
 
 	brd = 1 << l.sq_size;
 	i = -1;
-	ft_putstr("Border value:"); //
+/*	ft_putstr("Border value:"); //
 	ft_putnbr((int)brd);//
 	ft_putchar('\n');//
-	while (++i < 3)
+*/	while (++i < 3)
 		if (p.r[i] / brd != 0)
 			return (0);
 	return (1);
@@ -75,9 +75,9 @@ int	check_map(t_piece p, t_ull *map, t_puzz l)
 {
 	int	result;
 
-	ft_putendl("10 checking if can paste");//
+//	ft_putendl("10 checking if can paste");//
 	result = check_zone(p, map, l) * check_border(p, l) * check_bottom(p, l); 
-	if (result == 0)
-		ft_putendl("11 could not paste"); //
+//	if (result == 0)
+//		ft_putendl("11 could not paste"); //
 	return (result);
 }

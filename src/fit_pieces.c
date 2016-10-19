@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 10:29:43 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/17 17:50:48 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/19 10:16:22 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,10 @@ t_piece		edit_map(t_piece p, t_ull *map, t_puzz l, int status)
 	while (++i < 4)
 	{
 		map[l.mrow + i] = p.r[i] ^ map[l.mrow + i];
-		ft_putnbr(p.r[i]);//
-		ft_putchar(',');//
+//		ft_putnbr(p.r[i]);//
+//		ft_putchar(',');//
 	}
-	ft_putchar('\n');//
+//	ft_putchar('\n');//
 	p.placed = status;
 	if (p.placed)
 	{
@@ -69,10 +69,10 @@ t_piece		*reset_pieces(t_piece *p, t_puzz l)
 {
 	int	pu;
 	int	i;
-	ft_putendl("Resetting pieces");//
-	ft_putstr("puzzle.shift: ");//
-	ft_putnbr(l.shift);//
-	ft_putchar('\n'); //
+//	ft_putendl("Resetting pieces");//
+//	ft_putstr("puzzle.shift: ");//
+//	ft_putnbr(l.shift);//
+//	ft_putchar('\n'); //
 
 	pu = -1;
 	while (++pu < l.pnbr)
@@ -109,7 +109,7 @@ t_ull	*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz legend)
 	while (pu < legend.pnbr)//
 		if (p[pu++].placed == 0)//
 			pl++;//
-	ft_putendl("7");//
+//	ft_putendl("7");//
 	pu = 0;
 	while ((p[pu].placed) == 1)
 		if (++pu == legend.pnbr)
@@ -119,17 +119,20 @@ t_ull	*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz legend)
 	ft_putstr(" max eb:");//
 	ft_putnbr(legend.eb_max);//
 	ft_putchar('\n');//
+	ft_putstr("current row: ");//
+	ft_putnbr(legend.mrow);//
+	ft_putchar('\n');//
 	while (pu < legend.pnbr && eb_nbr <= legend.eb_max)
 	{
-		ft_putendl("9");//
+	//	ft_putendl("9");//
 		if ((p[pu].placed) != 1)
 		{
 			if ((check_map(p[pu], map, legend)))
 				p[pu] = edit_map(p[pu], map, legend, 1);
 			if (p[pu].placed == 1 || --pl == 0)
 			{
-				if (pl == 0)//
-					ft_putendl("moving to next space");//
+	//			if (pl == 0)//
+	//				ft_putendl("moving to next space");//
 				if((tail = move_bits(p, map, eb_nbr, legend)))
 					return (tail);
 				if (p[pu].placed == 1)
@@ -139,9 +142,15 @@ t_ull	*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz legend)
 				}
 			}
 		}
-		ft_putendl("12");//
+		ft_putstr("13 bad piece ");//
+		ft_putchar(p[pu].label);//
+		ft_putstr(" Coordinates i:");//
+		ft_putnbr(legend.mrow);//
+		ft_putstr(" j:");//
+		ft_putnbr(legend.shift);//
+		ft_putchar('\n');//
 		pu++;
 	}
-	ft_putendl("Backtracking");
+//	ft_putendl("Backtracking");
 	return (NULL);
 }
