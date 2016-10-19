@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/18 20:03:08 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/19 10:29:37 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,8 @@ const char *g_blockdefine[] = {		"#...#...#...#", 	//VT I
 									".#..##...#" };		//LT T
 */
 typedef unsigned long long	t_ull;
+// Ordered by weight of candidacy
+extern char *g_blockdefine[20];
 
 typedef	struct				s_puzzle
 {
@@ -51,6 +53,8 @@ typedef	struct				s_puzzle
 	int						mrow;
 	int						eb_max;
 }							t_puzz;
+
+typedef unsigned long long t_ull;
 
 typedef	struct				s_piece
 {

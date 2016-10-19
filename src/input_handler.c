@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/13 19:09:42 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/18 15:29:12 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,6 @@
 #include "libft.h"
 #include "fillit.h"
 
-#define MAX_BUFFER 4096
-
-// ADD TO LIBRARY AT YOUR DISCRETION
-// Counts instances of specific char in string and returns the int value of 
-// occurences
 int ft_strctchr(char *str, char c)
 {
 	int count;
@@ -33,51 +28,6 @@ int ft_strctchr(char *str, char c)
 		str++;
 	}
 	return (count);
-}
-
-// PLEASE ADD TO LIBRARY
-// Removes char from string and returns new string
-char	*ft_strchrrm(char *str, char c)
-{
-	int newlen;
-	int i;
-	int j;
-	newlen = ft_strlen(str) - ft_strctchr(str, c);
-	char *new = (char *)malloc(sizeof(char) * (newlen + 1));
-
-	i = 0;
-	j = 0;
-	while (str[i])
-	{
-		if (str[i] != c)
-			new[j++] = str[i++];
-		i++;
-	}
-	return (new);
-}
-
-// PLEASE ADD TO LIBRARY
-// Same as ft_strtrim but instead only trims a specific char
-char	*ft_strctrim(char *str, char c)
-{
-	int		i;
-	int		len;
-	char	*res;
-
-	i = 0;
-	len = 0;
-	while (*str == c)
-		str++;
-	while (str[i])
-		i++;
-	i--;
-	while (str[i] == c && i >= 0)
-		i--;
-	res = ft_strsub(str, 0, i + 1);
-	if (res)
-		return (res);
-	else
-		return (NULL);
 }
 
 int open_file(char *filename)
@@ -106,19 +56,37 @@ t_piece *process_input(char *filename)
 {
 	int 	fd;
 	int		ret;
-	char 	buffer[MAX_BUFFER + 1];
+	int		in_ct;
+	size_t	max_buf;
+	size_t	cur_buf;
+	//char 	**input;
 	t_piece *pieces = NULL;
 
+	ret = 1;
+	in_ct = 0;
+	max_buf = 126;
+	cur_buf = 0;
+	char *buffer = ft_memalloc(max_buf);
 	fd = open_file(filename);
 	if (fd == 0)
 		return (NULL);
-	ret = read(fd, buffer, MAX_BUFFER);
-	if (ret == -1)
+	while (ret)
 	{
-		ft_putstr("Read error occured.\n");
-		return (NULL);
+		cur_buf += 21;
+		if (max_buf <= cur_buf)
+		{
+			ft_putstr("Reallocating...\n");
+			buffer = (char *)ft_realloc(buffer, &max_buf);	
+		}
+		ret = read(fd, buffer, 21);	
+		if (ret == -1)
+		{
+			ft_putstr("Read error occured.\n");
+			return (NULL);
+		}
+		ft_putstr(buffer);
 	}
-	pieces = (t_piece *)ft_memset(pieces, 0, ct_pieces(buffer) + 1);
+	//pieces = (t_piece *)ft_memset(pieces, 0, ct_pieces(buffer) + 1);
 	
 	return (pieces);
 }
