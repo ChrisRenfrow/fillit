@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/18 15:29:12 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/18 22:37:05 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ t_piece *process_input(char *filename)
 
 	ret = 1;
 	in_ct = 0;
-	max_buf = 126;
+	max_buf = 546;
 	cur_buf = 0;
 	char *buffer = ft_memalloc(max_buf);
 	fd = open_file(filename);
@@ -75,8 +75,9 @@ t_piece *process_input(char *filename)
 		cur_buf += 21;
 		if (max_buf <= cur_buf)
 		{
-			ft_putstr("Reallocating...\n");
-			buffer = (char *)ft_realloc(buffer, &max_buf);	
+			ft_putstr("Fuck you and all your pieces.\n");
+			free(buffer);
+			return (NULL);
 		}
 		ret = read(fd, buffer, 21);	
 		if (ret == -1)
