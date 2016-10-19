@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 09:54:14 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/18 15:33:53 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/19 11:26:22 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,15 @@ t_ull	*eb_calculator(t_piece *pieces, t_ull *map, t_puzz l)
 	l.eb_max = (l.sq_size * l.sq_size) - (4 * l.pnbr);
 	l.mrow = 0;
 	l.shift = 0;
+	l.min_eb[0] = 10000;
 	map = (t_ull *)ft_memalloc(sizeof(t_ull) * l.sq_size + 3);
-	ft_putendl("4");
+//	ft_putendl("4");
  	if ((solved = fit_pieces(pieces, map, eb_nbr, l)))
-	   return (solved);	
-	ft_putendl("5 exited out of fit pieces");
+	{
+		print_solution(pieces, solved, l);
+		return (solved);	
+	}
+//	ft_putendl("5 exited out of fit pieces");
 	pieces = total_reset(pieces, l);
 /*	while (pu < l.pnbr)
 	{
@@ -73,9 +77,9 @@ t_ull	*eb_calculator(t_piece *pieces, t_ull *map, t_puzz l)
 		if (++pu == l.pnbr)
 			return (map);
 	}*/
-	ft_putstr("6 square size:");
-	ft_putnbr(l.sq_size);
-	ft_putchar('\n');
+//	ft_putstr("6 square size:");
+//	ft_putnbr(l.sq_size);
+//	ft_putchar('\n');
 	ft_memdel((void *)&map);
 	l.sq_size++;
 //	if (l.sq_size > 7)
@@ -114,6 +118,7 @@ int			main(void)
 	t_piece	dj;
 	t_piece	ll;
 	t_piece	hs;
+	t_piece	j;
 	t_piece	*array;
 	t_ull	*map;
 	t_puzz	puzzle;	
@@ -121,6 +126,7 @@ int			main(void)
 	int		map_size;
 	int		pi;
 	int		ai;
+	int		eb_min;
 //	int		hii;
 //	int		squarei;
 //	int		vzi;
@@ -264,22 +270,59 @@ int			main(void)
 	hs.label = 'K';
 	hs.order = 0;
 
+	j.r[0] = 2;
+	j.r[1] = 2;
+	j.r[2] = 3;
+	j.r[3] = 0;
+	j.a[0] = 2;
+	j.a[1] = 2;
+	j.a[2] = 3;
+	j.a[3] = 0;
+	j.placed = 0;
+	j.label = 'L';
+	j.order = 0;
+	
+	vi.label = 'A';
+	hi.label = 'B';
+	dj.label = 'C';
+	hs.label = 'D';
+	square.label = 'E';
+	hz.label = 'F';
+	ll.label = 'G';
+	tee.label = 'H';
 	array = (t_piece *)ft_memalloc(sizeof(t_piece) * 8);
 	array[0] = vi;
+//	array[1] = vi;//
+//	array[2] = vi;//
 	array[1] = hi;
+//	array[4] = hi;//
+//	array[5] = hi;//
+//	array[6] = hi2;
+//	array[7] = hi2;//
 	array[2] = dj;
-	array[3] = square;
-	array[4] = tee;
+//	array[9] = dj;//
+	array[7] = tee;
+//	array[11] = tee;//
+	array[4] = square;
+//	array[13] = square;//
 	array[5] = hz;
+//	array[15] = hz;//
 	array[6] = ll;
-	array[7] = hs;
-//	array[1] = hi2;
-//	array[2] = tl;
-//	array[6] = tup;
+//	array[17] = ll;//
+	array[3] = hs;
+//	array[19] = hs;//
+//	array[20] = tl;
+//	array[22] = tl;//
+//	array[21] = tup;
+//	array[23] = tup;//
+//	array[24] = j;
+//	array[24] = dj;
+//	array[25] = square;
 
 	puzzle.pnbr = 8;
 	piece_order = 0;
 	puzzle.po = &piece_order;
+	puzzle.min_eb = &eb_min;
 	map_size = ft_sqrt(4 * puzzle.pnbr);
 
 	printf("2 to the 31th:%llu 2 to the 6th:%llu 2 to the 0:%llu\n",ft_power(2, 31),ft_power(2, 6),ft_power(2, 8));
@@ -304,13 +347,8 @@ int			main(void)
 		*(map + 3) = array[0].r4 ^ array[1].r4;
 	}*/
 	map = map_maker(array, puzzle);
-	pi = -1;
-	while (++pi < puzzle.pnbr)
-	{
-		ft_putnbr(array[pi].order);
-		ft_putchar(array[pi].label);
-		ft_putchar('\n');
-	}
+	ft_putendl("The minimum empty block value:");
+	ft_putnbr(*puzzle.min_eb);
 /*	piece_nbr = 0;
 	while (piece_nbr++ < map_size)
 	{

@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/19 12:23:01 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/19 13:10:04 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,13 @@ extern char *g_blockdefine[20];
 
 typedef	struct				s_puzzle
 {
+	int						*min_eb;
+	int						*po;
 	int						sq_size;
 	int						pnbr;
 	int						shift;
 	int						mrow;
 	int						eb_max;
-	int						*po;
 }							t_puzz;
 
 typedef unsigned long long t_ull;
@@ -48,6 +49,7 @@ t_ull						*shift_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz l);
 t_ull						*map_maker(t_piece *pieces, t_puzz legend);
 t_ull						*eb_calculator(t_piece *pieces, t_ull *map, t_puzz l);
 void						print_row(t_ull row, int columns);
+void	print_solution(t_piece *p, t_ull *map, t_puzz l);
 
 
 int 	ct_pieces(char *input);
