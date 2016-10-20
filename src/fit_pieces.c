@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 10:29:43 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/19 12:50:04 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/19 15:57:30 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,6 @@ t_piece		edit_map(t_piece p, t_ull *map, t_puzz l, int status)
 	}
 	else
 		l.po[0]--;
-
 	ft_putendl("12 editing map");//
 	ft_putstr("1 = paste, 0 = reset: ");//
 	ft_putnbr(p.placed);//
@@ -88,13 +87,33 @@ t_piece		*reset_pieces(t_piece *p, t_puzz l)
 }
 
 /*
-** Move_one is meant to move the piece exactly one spot over after resetting the map.
-
-t_puzz	move_one(t_puzz l)
-{
-
-}
+** Adjust_coord adjusts the paste coordinates for pieces such as the S
+** piece that will paste earlier than designated empty space should be.
 */
+
+t_puzz	adjust_coord(t_piece p, t_puzz l, t_ull *map)
+{
+	int	row;
+	int	cs;
+
+	row = p.a[0];
+	cs = 1 << l.shift;
+		print_row(row, 7);//
+		ft_putchar('\n');//
+	row = row ^ 15;
+		print_row(row, 7);//
+		ft_putchar('\n');//
+	if (cs & map[l.mrow])
+		while ((row & 1))
+		{
+			l.shift++;
+			print_row(row, 7);//
+			ft_putchar('\n');//
+			row = row >> 1;
+		}
+	return (l);
+}
+
 
 /*
 ** Main body of the recursive function.
@@ -137,7 +156,22 @@ t_ull	*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz legend)
 		if ((p[pu].placed) != 1)
 		{
 			if ((check_map(p[pu], map, legend)))
+			{
 				p[pu] = edit_map(p[pu], map, legend, 1);
+		ft_putstr(" Coordinates before adjust i:");//
+		ft_putnbr(legend.mrow);//
+		ft_putstr(" j:");//
+		ft_putnbr(legend.shift);//
+		ft_putchar('\n');//
+
+				legend = adjust_coord(p[pu], legend, map);
+
+		ft_putstr(" Coordinates after adjust i:");//
+		ft_putnbr(legend.mrow);//
+		ft_putstr(" j:");//
+		ft_putnbr(legend.shift);//
+		ft_putchar('\n');//
+			}
 			if (p[pu].placed == 1 || --pl == 0)
 			{
 	//			if (pl == 0)//

@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 09:54:14 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/19 11:26:22 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/20 15:24:59 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -290,26 +290,26 @@ int			main(void)
 	hz.label = 'F';
 	ll.label = 'G';
 	tee.label = 'H';
-	array = (t_piece *)ft_memalloc(sizeof(t_piece) * 8);
+	array = (t_piece *)ft_memalloc(sizeof(t_piece) * 10);
 	array[0] = vi;
-//	array[1] = vi;//
-//	array[2] = vi;//
-	array[1] = hi;
+	array[1] = vi;//
+	array[2] = vi;//
+	array[3] = hi;
 //	array[4] = hi;//
 //	array[5] = hi;//
 //	array[6] = hi2;
 //	array[7] = hi2;//
-	array[2] = dj;
+	array[4] = dj;
 //	array[9] = dj;//
-	array[7] = tee;
+	array[8] = tee;
 //	array[11] = tee;//
-	array[4] = square;
+	array[6] = square;
 //	array[13] = square;//
 	array[5] = hz;
 //	array[15] = hz;//
-	array[6] = ll;
+	array[9] = ll;
 //	array[17] = ll;//
-	array[3] = hs;
+	array[5] = hs;
 //	array[19] = hs;//
 //	array[20] = tl;
 //	array[22] = tl;//
@@ -319,7 +319,7 @@ int			main(void)
 //	array[24] = dj;
 //	array[25] = square;
 
-	puzzle.pnbr = 8;
+	puzzle.pnbr = 10;
 	piece_order = 0;
 	puzzle.po = &piece_order;
 	puzzle.min_eb = &eb_min;
