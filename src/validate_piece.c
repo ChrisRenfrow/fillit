@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 18:03:53 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/19 12:27:59 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/19 17:06:13 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ int	is_piece(char *input)
 	int i;
 
 	i = 0;
-	input = ft_strchrrplc(input, '\n', '.');
+	
 	while(i < 19)
 	{
 		if(!ft_strcmp(input, g_blockdefine[i]))
 		{
-			ft_putnbr(i);
-			ft_putchar('\n');
+			/*ft_putnbr(i);
+			ft_putchar('\n');*/
 			return (i);
 		}	
 		i++;

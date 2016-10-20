@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 23:27:10 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/18 23:14:14 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/19 17:52:52 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,11 +19,16 @@ int main(int argc, char *argv[])
 {
 	(void)argc;
 
+	int i = 0;
 	t_piece *ptr = process_input(argv[1]);
 	while (ptr->label)
 	{
+
 		ft_putchar(ptr->label);
+		ft_putstr(" - ");
+		ft_putstr(g_blockdefine[ptr->order]);
 		ft_putchar('\n');
+		
 		ptr++;
 	}
 	return (0);
