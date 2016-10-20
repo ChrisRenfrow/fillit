@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/19 13:06:40 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/19 17:48:47 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,8 @@
 #include <fcntl.h>
 #include "libft.h"
 #include "fillit.h"
+
+#define PIECEBYTES 21
 
 int ft_strctchr(char *str, char c)
 {
@@ -43,17 +45,25 @@ int open_file(char *filename)
 		return (fd);
 }
 
-t_piece	*make_piece(char *input, int label)
+t_piece	make_piece(char *input, int label, int i)
 {
 	// Need to do math to make bit-map version of the piece
-	// through the passed input.
 	(void)input;
 
-	t_piece *piece = (t_piece *)malloc(sizeof(t_piece));
-	piece->placed = 0;
-	piece->order = -1; // -1 if not determined
-	piece->label = label;
-		// Assign values to r[4] and a[4]
+	t_piece piece;
+	piece.placed = 0;
+	piece.order = i; // -1 if not determined
+	piece.label = label;
+	// Assign values to r[4] and a[4]
+	/*
+	while(i < 3)
+	{
+		t_ull map = bitmath(input);
+		r[i] = map;
+		a[i] = map;
+		i++;
+	}
+	*/
 	return (piece);
 }
 
@@ -64,21 +74,21 @@ t_piece *process_input(char *filename)
 	int 	i;
 	size_t	max_buf;
 	size_t	cur_buf;
-	t_piece **pieces = (t_piece **)ft_memalloc(sizeof(t_piece *) * (26 + 1));
+	t_piece *pieces = (t_piece *)ft_memalloc(sizeof(t_piece) * (26 + 1));
 	char 	label;
 
 	ret = 1;
 	i = 0;
-	max_buf = 21 * 26;
+	max_buf = PIECEBYTES * 26;
 	cur_buf = 0;
 	label = 'A';
-	char *buffer = ft_memalloc(max_buf);
+	char *buffer = ft_memalloc(PIECEBYTES + 1);
 	fd = open_file(filename);
 	if (fd == 0)
 		return (NULL);
 	while (ret)
 	{
-		cur_buf += 21;
+		cur_buf += PIECEBYTES;
 		if (cur_buf > max_buf)
 		{
 			ft_putstr("Fuck you and all your pieces.\n");
@@ -86,7 +96,7 @@ t_piece *process_input(char *filename)
 			free(pieces);
 			return (NULL);
 		}
-		ret = read(fd, buffer, 21);
+		ret = read(fd, buffer, PIECEBYTES);
 		if (ret == -1)
 		{
 			ft_putstr("Read error occured.\n");
@@ -94,9 +104,11 @@ t_piece *process_input(char *filename)
 		}
 		if (is_valid_block(buffer) >= 0)
 		{
-			pieces[i] = make_piece(buffer, label++);
+			pieces[i] = make_piece(buffer, label++, is_valid_block(buffer));
 			i++;
 		}
+		if (ret == 20)
+			return (pieces);	
 	}	
-	return (*pieces);
+	return (pieces);
 }
