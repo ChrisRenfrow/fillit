@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 09:54:14 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/20 19:06:17 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/20 20:24:16 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,8 @@ t_ull	*eb_calculator(t_piece *pieces, t_ull *map, t_puzz l)
 	l.eb_max = (l.sq_size * l.sq_size) - (4 * l.pnbr);
 	l.mrow = 0;
 	l.shift = 0;
-	map = (t_ull *)ft_memalloc(sizeof(t_ull) * l.sq_size + 3);
+	if (!(map = (t_ull *)ft_memalloc(sizeof(t_ull) * l.sq_size + 3)))
+		return (0);
 	if ((solved = fit_pieces(pieces, map, eb_nbr, l)))
 	{
 		pieces = sort_pieces(pieces, l);
