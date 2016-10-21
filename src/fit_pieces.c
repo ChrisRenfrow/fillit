@@ -6,14 +6,12 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 10:29:43 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/19 15:57:30 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/20 17:32:59 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
-#include <stdio.h> //DEEELEEETTEE
-
 
 /*
 ** Edit_map will either cut or paste a piece depending on the status.
@@ -23,17 +21,13 @@
 
 t_piece		edit_map(t_piece p, t_ull *map, t_puzz l, int status)
 {
-	int	printtest = 0;//
 	int	i;
 
 	i = -1;
 	while (++i < 4)
 	{
 		map[l.mrow + i] = p.r[i] ^ map[l.mrow + i];
-//		ft_putnbr(p.r[i]);//
-//		ft_putchar(',');//
 	}
-//	ft_putchar('\n');//
 	p.placed = status;
 	if (p.placed)
 	{
@@ -42,19 +36,6 @@ t_piece		edit_map(t_piece p, t_ull *map, t_puzz l, int status)
 	}
 	else
 		l.po[0]--;
-	ft_putendl("12 editing map");//
-	ft_putstr("1 = paste, 0 = reset: ");//
-	ft_putnbr(p.placed);//
-	ft_putchar('\n');//
-	while (printtest++ < l.sq_size)//
-	{
-		ft_putstr("reuslt:");//
-		print_row(*map++, l.sq_size);//
-		ft_putchar('\n');//
-	}
-	ft_putchar(p.label);//
-	ft_putnbr(p.order);//
-	ft_putchar('\n');//
 	return (p);
 }
 
@@ -68,10 +49,6 @@ t_piece		*reset_pieces(t_piece *p, t_puzz l)
 {
 	int	pu;
 	int	i;
-//	ft_putendl("Resetting pieces");//
-//	ft_putstr("puzzle.shift: ");//
-//	ft_putnbr(l.shift);//
-//	ft_putchar('\n'); //
 
 	pu = -1;
 	while (++pu < l.pnbr)
@@ -91,115 +68,77 @@ t_piece		*reset_pieces(t_piece *p, t_puzz l)
 ** piece that will paste earlier than designated empty space should be.
 */
 
-t_puzz	adjust_coord(t_piece p, t_puzz l, t_ull *map)
+t_puzz		adjust_coord(t_piece p, t_puzz l, t_ull *map)
 {
 	int	row;
 	int	cs;
 
 	row = p.a[0];
 	cs = 1 << l.shift;
-		print_row(row, 7);//
-		ft_putchar('\n');//
 	row = row ^ 15;
-		print_row(row, 7);//
-		ft_putchar('\n');//
 	if (cs & map[l.mrow])
 		while ((row & 1))
 		{
 			l.shift++;
-			print_row(row, 7);//
-			ft_putchar('\n');//
 			row = row >> 1;
 		}
 	return (l);
 }
 
+/*
+** Pieces_left calculates how many pieces have still not been placed
+** into the map yet.
+*/
+
+int			pieces_left(t_piece *p, t_puzz l)
+{
+	int	pu;
+	int	pl;
+
+	pu = 0;
+	pl = 0;
+	while (pu < l.pnbr)
+		if (p[pu++].placed == 0)
+			pl++;
+	return (pl);
+}
 
 /*
 ** Main body of the recursive function.
-** 1. Selects first unused piece for checking.
-**			If there are no unused pieces, then YAY you did it, return solution.
-** 2. If the current number of empty blocks is smaller than the max then proceed 
-**		with the piece fitting process (otherwise return NULL))	
-**			2a. While we have pieces left, if current piece isn't used check it
-**					If piece can fit then place and move otherwise check next piece.
-**			2b. If no pieces can fit, then move anyways and increment eb counter.
+** 117. Calculates the number of pieces left.
+** 118-119: Selects the first unused piece to fit into the puzzle.
+** 122-138: Trying to fit pieces into puzzle as long as there are pieces left
+**			and the maximum number of empty blocks has not been exceeded.
+**	If the piece fits then add it to the map and move to the next map position.
+**	If the piece was placed in the incorrect position remove it from the map
+**		and reset all unused pieces to the appropriate horizontal value.
 */
 
-t_ull	*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz legend)
+t_ull		*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz legend)
 {
 	t_ull	*tail;
 	int		pu;
 	int		pl;
 
-	pu = 0;
-	pl = 0;
-	while (pu < legend.pnbr)//
-		if (p[pu++].placed == 0)//
-			pl++;//
-//	ft_putendl("7");//
-	pu = 0;
-	while ((p[pu].placed) == 1)
-		if (++pu == legend.pnbr)
-			return (map);
-	ft_putstr("8: eb before check:");//
-	ft_putnbr(eb_nbr);//
-	ft_putstr(" max eb:");//
-	ft_putnbr(legend.eb_max);//
-	ft_putchar('\n');//
-	ft_putstr("current row: ");//
-	ft_putnbr(legend.mrow);//
-	ft_putchar('\n');//
-	while (pu < legend.pnbr && eb_nbr <= legend.eb_max)
-	{
-	//	ft_putendl("9");//
+	pl = pieces_left(p, legend);
+	if ((pu = starting_piece(p, legend)) == 42)
+		return (map);
+	while (++pu < legend.pnbr && eb_nbr <= legend.eb_max)
 		if ((p[pu].placed) != 1)
 		{
 			if ((check_map(p[pu], map, legend)))
 			{
 				p[pu] = edit_map(p[pu], map, legend, 1);
-		ft_putstr(" Coordinates before adjust i:");//
-		ft_putnbr(legend.mrow);//
-		ft_putstr(" j:");//
-		ft_putnbr(legend.shift);//
-		ft_putchar('\n');//
-
 				legend = adjust_coord(p[pu], legend, map);
-
-		ft_putstr(" Coordinates after adjust i:");//
-		ft_putnbr(legend.mrow);//
-		ft_putstr(" j:");//
-		ft_putnbr(legend.shift);//
-		ft_putchar('\n');//
 			}
 			if (p[pu].placed == 1 || --pl == 0)
-			{
-	//			if (pl == 0)//
-	//				ft_putendl("moving to next space");//
-				if((tail = move_bits(p, map, eb_nbr, legend)))
+				if ((tail = move_bits(p, map, eb_nbr, legend)))
 					return (tail);
-				if (p[pu].placed == 1)
-				{
-		ft_putstr(" Coordinates before reset i:");//
-		ft_putnbr(legend.mrow);//
-		ft_putstr(" j:");//
-		ft_putnbr(legend.shift);//
-		ft_putchar('\n');//
-					p[pu] = edit_map(p[pu], map, legend, 0);
-					p = reset_pieces(p, legend); 
-	//				legen = move_one(legend);
-				}
+			if (p[pu].placed == 1)
+			{
+				p[pu] = edit_map(p[pu], map, legend, 0);
+				p = reset_pieces(p, legend);
 			}
 		}
-		ft_putstr("13 bad piece ");//
-		ft_putchar(p[pu].label);//
-		ft_putstr(" Coordinates after reset i:");//
-		ft_putnbr(legend.mrow);//
-		ft_putstr(" j:");//
-		ft_putnbr(legend.shift);//
-		ft_putchar('\n');//
-		pu++;
-	}
-//	ft_putendl("Backtracking");
 	return (NULL);
 }

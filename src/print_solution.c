@@ -6,52 +6,12 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:35:55 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/20 15:00:40 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/20 18:31:15 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
-
-void	print_shit(t_piece *p, t_ull *map, t_puzz l)
-{
-	int	pi;//
-	int ai;//
-	int printtest = 0;//
-		l.mrow = -1;//
-		l.min_eb[0] = 10000;//
-		while (++l.mrow < l.sq_size)//
-			count_empty(map[l.mrow], l);//
-		ft_putendl("Square size");//
-		ft_putnbr(l.sq_size);//
-		ft_putchar('\n');//
-	while (printtest++ < l.sq_size)//
-	{
-		ft_putstr("reuslt:");//
-		print_row(*map++, l.sq_size);//
-		ft_putchar('\n');//
-	}
-	ft_putendl("After sorting:");//
-	pi = -1;//
-	while (++pi < l.pnbr)//
-	{
-		ft_putnbr(p[pi].order);//
-		ft_putchar(p[pi].label);//
-		ft_putchar('\n');//
-	}
-	ai = -1;//
-	while (++ai < l.pnbr)//
-	{
-		pi = -1;//
-		while (++pi < 4)//
-		{
-			print_row(p[ai].r[pi], l.sq_size);//
-			ft_putchar('\n');//
-		}
-		ft_putchar('\n');//
-	}
-
-}
 
 /*
 ** Sorts the pieces into the order of which they were placed into the map.
@@ -82,90 +42,77 @@ t_piece	*sort_pieces(t_piece *p, t_puzz l)
 	return (p);
 }
 
+/*
+** If the first bit of mrow is 0 then '.' is printed and mrow is shifted.
+** col is also iterated to reflect movement in printing position.
+*/
+
+t_ull	print_empty(t_ull mrow, int *col, int *paste)
+{
+	if (!(mrow & 1))
+	{
+		ft_putchar('.');
+		mrow = mrow >> 1;
+		(*col)++;
+		*paste = 0;
+	}
+	return (mrow);
+}
+
+/*
+** print_char prints the appropriate character.
+** 1. Establishes which row of the piece to print.
+** 2. Deletes any 0s preceeding a 1 in the piece row.
+** 3. Prints characters as long as the piece compares appropriatley to the map
+**	as well as its horizontal position in the puzzle.
+*/
+
+t_piece	print_char(t_piece p, t_ull *mrow, int *col, int *paste)
+{
+	int	pri;
+
+	pri = 0;
+	while (!(p.a[pri]) && pri < 3)
+		pri++;
+	while ((p.a[pri]) && ((~p.a[pri]) & 1))
+		p.a[pri] = p.a[pri] >> 1;
+	while ((p.a[pri] & *mrow) && (p.r[pri] & (1 << *col)))
+	{
+		ft_putchar(p.label);
+		p.a[pri] = p.a[pri] >> 1;
+		*mrow = *mrow >> 1;
+		*paste = 1;
+		(*col)++;
+	}
+	return (p);
+}
+
+/*
+** Prints the solution by comparing the anchor values of the pieces with map.
+** If the pieces match then we shift both map and anchor values to indicate that
+** the piece portion and map portion have been printed already.
+*/
+
 void	print_solution(t_piece *p, t_ull *map, t_puzz l)
 {
-//	char	**puzzle;
 	int		pu;
 	int		col;
 	int		row;
-	int		pri;
 	int		paste;
-//	int		size;
 
-	p = sort_pieces(p, l);
-//	size = l.sq_size + 1;
-//	if(!(puzzle = (char **)ft_new_handle(size, size, sizeof(char))))
-//		return ;
 	row = -1;
-	col = -1;
-	paste = 0;
 	while (++row < l.sq_size)
 	{
 		col = 0;
 		pu = 0;
-/*	ft_putstr("Row:");//
-	ft_putnbr(row);//
-	ft_putchar('\n');//
-*/		while (col < l.sq_size && pu < l.pnbr)
+		while (col < l.sq_size && pu < l.pnbr)
 		{
-			if (!(map[row] & 1))
-			{
-//			ft_putstr("Empty: ");//
-				ft_putchar('.');
-//			ft_putchar('\n');//
-				map[row] = map[row] >> 1;
-				col++;
-			}
-			pri = 0;
-			while  (!(p[pu].a[pri]) && pri < 3)
-				pri++;
-/*		ft_putchar(p[pu].label);//
-		ft_putnbr(p[pu].order);//
-		ft_putnbr(pri);//
-		ft_putstr(" Piece: ");//
-		print_row(p[pu].a[pri], l.sq_size);//
-		ft_putchar('\n');//
-*/			while  ((p[pu].a[pri]) && ((~p[pu].a[pri]) & 1))
-				p[pu].a[pri] = p[pu].a[pri] >> 1;
-/*		ft_putstr("    Piece: ");//
-		print_row(p[pu].a[pri], l.sq_size);//
-		ft_putchar('\n');//
-		if ((p[pu].a[pri] & map[row]))//
-			ft_putendl(" passed a & m");//
-		if ((p[pu].r[pri] & (1 << col)))//
-			ft_putendl("   passed r & c");//
-*/			while ((p[pu].a[pri] & map[row]) && p[pu].a[pri] && 
-					(p[pu].r[pri] & (1 << col)))
-			{
-//			ft_putendl("Enter while");//
-				ft_putchar(p[pu].label);
-/*			ft_putnbr(p[pu].order);//
-			ft_putnbr(pri);//
-			ft_putstr(" Piece: ");//
-			print_row(p[pu].a[pri], l.sq_size);//
-			ft_putchar('\n');//
-			ft_putstr("    Map:   ");//
-			print_row(map[row], l.sq_size);//
-			ft_putchar('\n');//
-	*/			p[pu].a[pri] = p[pu].a[pri] >> 1;
-				map[row] = map[row] >> 1;
-/*			ft_putstr("After Piece: ");//
-			print_row(p[pu].a[pri], l.sq_size);//
-			ft_putchar('\n');//
-			ft_putstr("After Map:   ");//
-			print_row(map[row], l.sq_size);//
-			ft_putchar('\n');//
-			ft_putchar('\n');//
-*/			paste = 1;
-				col++;
-		}
-		pu++;
-		if (paste-- == 1)
-			pu = 0;
-//		ft_putendl("Next piece");//
+			map[row] = print_empty(map[row], &col, &paste);
+			p[pu] = print_char(p[pu], &map[row], &col, &paste);
+			pu++;
+			if (paste-- == 1)
+				pu = 0;
 		}
 		ft_putchar('\n');
 	}
-
-//	print_shit(p, map, l);
 }
