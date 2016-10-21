@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:35:55 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/20 18:31:15 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/21 11:12:40 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,25 @@ t_piece	print_char(t_piece p, t_ull *mrow, int *col, int *paste)
 		ft_putchar(p.label);
 		p.a[pri] = p.a[pri] >> 1;
 		*mrow = *mrow >> 1;
+		p.placed = 1;
 		*paste = 1;
 		(*col)++;
 	}
+	return (p);
+}
+
+/*
+** print_reset sets the placed value of all pieces to 0. Indicating that the piece
+** has not been printed on this row yet.
+*/
+
+t_piece	*print_reset(t_piece *p, t_puzz l)
+{
+	int	pu;
+
+	pu = -1;
+	while (++pu < l.pnbr)
+		p[pu].placed = 0;
 	return (p);
 }
 
@@ -105,10 +121,12 @@ void	print_solution(t_piece *p, t_ull *map, t_puzz l)
 	{
 		col = 0;
 		pu = 0;
+		p = print_reset(p, l);
 		while (col < l.sq_size && pu < l.pnbr)
 		{
 			map[row] = print_empty(map[row], &col, &paste);
-			p[pu] = print_char(p[pu], &map[row], &col, &paste);
+			if (p[pu].placed == 0)
+				p[pu] = print_char(p[pu], &map[row], &col, &paste);
 			pu++;
 			if (paste-- == 1)
 				pu = 0;
