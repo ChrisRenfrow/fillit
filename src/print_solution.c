@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:35:55 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/21 11:12:40 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 11:37:28 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 #include "fillit.h"
 
 /*
-** Sorts the pieces into the order of which they were placed into the map.
+** Sorts the pieces by the row in which they were placed on the map.
 */
 
 t_piece	*sort_pieces(t_piece *p, t_puzz l)
@@ -30,7 +30,7 @@ t_piece	*sort_pieces(t_piece *p, t_puzz l)
 		i = -1;
 		while ((++i + 1) < l.pnbr)
 		{
-			if (p[i].order > p[i + 1].order)
+			if (p[i].mrow > p[i + 1].mrow)
 			{
 				temp = p[i];
 				p[i] = p[i + 1];
@@ -38,6 +38,13 @@ t_piece	*sort_pieces(t_piece *p, t_puzz l)
 				count++;
 			}
 		}
+	}
+	i = -1;
+	while (++i < l.pnbr)//
+	{
+		ft_putnbr(p[i].mrow);//
+		ft_putchar(p[i].label);//
+		ft_putchar('\n');//
 	}
 	return (p);
 }

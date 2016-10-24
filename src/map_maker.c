@@ -1,17 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   map_maker.c                                        :+:      :+:    :+:   */
+/*   new_map_maker.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/18 09:54:14 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/20 20:24:16 by kdavis           ###   ########.fr       */
+/*   Created: 2016/10/22 20:20:42 by kdavis            #+#    #+#             */
+/*   Updated: 2016/10/24 14:52:41 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
+#include <stdlib.h>
 
 /*
 ** ft_sqrt gives the smallest square size that can be created given the number
@@ -56,42 +57,37 @@ t_piece	*total_reset(t_piece *pieces, t_puzz l)
 ** pieces can't fit in the previous square.
 */
 
-t_ull	*eb_calculator(t_piece *pieces, t_ull *map, t_puzz l)
+t_puzz	*eb_calculator(t_piece *pieces, t_puzz *l)
 {
-	t_ull	*solved;
-	int		eb_nbr;
+	t_puzz	*solved;
 	int		pu;
 
 	pu = 0;
-	eb_nbr = 0;
-	l.eb_max = (l.sq_size * l.sq_size) - (4 * l.pnbr);
-	l.mrow = 0;
-	l.shift = 0;
-	if (!(map = (t_ull *)ft_memalloc(sizeof(t_ull) * l.sq_size + 3)))
-		return (0);
-	if ((solved = fit_pieces(pieces, map, eb_nbr, l)))
+	l->mrow = 0;
+	l->shift = 0;
+	l->pu = 0;
+	if (!(l->map = (t_ull *)ft_memalloc(sizeof(t_ull) * (l->sq_size + 3))))
+		return (NULL);
+	if ((solved = fit_piece(pieces, l)))
 	{
-		pieces = sort_pieces(pieces, l);
-		print_solution(pieces, solved, l);
-		return (solved);
+		pieces = sort_pieces(pieces, *solved);
+		print_solution(pieces, solved->map, *solved);
+		return (l);
 	}
-	pieces = total_reset(pieces, l);
-	ft_memdel((void *)&map);
-	l.sq_size++;
-	map = eb_calculator(pieces, map, l);
-	return (map);
+	pieces = total_reset(pieces, *l);
+	ft_memdel((void *)&l->map);
+	l->sq_size++;
+	l = eb_calculator(pieces, l);
+	return (l);
 }
 
 /*
 ** Initializes the square size and activates the recursion loop.
 */
 
-void	map_maker(t_piece *pieces, t_puzz legend)
+void	map_maker(t_piece *pieces, t_puzz *legend)
 {
-	t_ull	*map;
-
-	legend.sq_size = ft_sqrt(4 * legend.pnbr);
-	map = NULL;
-	map = eb_calculator(pieces, map, legend);
-	ft_memdel((void *)&map);
+	legend->sq_size = ft_sqrt(4 * legend->pnbr);
+	legend = eb_calculator(pieces, legend);
+	ft_memdel((void *)&legend->map);
 }
