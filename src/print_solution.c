@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:35:55 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 15:24:10 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 16:07:21 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,8 +60,8 @@ t_piece	print_char(t_piece p, t_ull *mrow, int *col, int *paste)
 }
 
 /*
-** print_reset sets the placed value of all pieces to 0. Indicating that the piece
-** has not been printed on this row yet.
+** print_reset sets the placed value of all pieces to 0.
+** Indicating that the piece has not been printed on this row yet.
 */
 
 t_piece	*print_reset(t_piece *p, t_puzz l)

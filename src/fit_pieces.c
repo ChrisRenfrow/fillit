@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_fit_pieces.c                                   :+:      :+:    :+:   */
+/*   fit_pieces.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/22 11:02:34 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 15:24:02 by kdavis           ###   ########.fr       */
+/*   Created: 2016/10/24 15:31:21 by kdavis            #+#    #+#             */
+/*   Updated: 2016/10/24 16:07:09 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ t_puzz	*move_piece(t_piece *p, t_puzz *l)
 	{
 		while (++i < 4)
 			p[l->pu].r[i] = p[l->pu].r[i] << 1;
-			l->shift++;
+		l->shift++;
 	}
 	p[l->pu].mrow = l->mrow;
 	p[l->pu].shift = l->shift;
@@ -68,7 +68,7 @@ t_puzz	*edit_map(t_piece *p, t_puzz *l, int status)
 }
 
 /*
-** Starting_position determines where in the map to start trying to place 
+** Starting_position determines where in the map to start trying to place
 ** the next piece. Normally the starting position is at the top left of the
 ** map unless the piece is a duplicate of an already placed piece. In that
 ** case the piece starts after the already placed piece.
@@ -81,11 +81,8 @@ t_puzz	*starting_position(t_piece *p, t_puzz *l)
 	int	counter;
 
 	i = -1;
-	if (p[l->pu].placed == 0)
-	{
-		l->shift = 0;
-		l->mrow = 0;
-	}
+	l->shift = 0;
+	l->mrow = 0;
 	while (++i < l->pnbr)
 	{
 		pri = -1;

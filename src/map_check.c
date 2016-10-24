@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 10:26:52 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 15:56:25 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 16:03:15 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ int	check_zone(t_piece p, t_ull *map, t_puzz l)
 ** placed in this particular location on the map.
 */
 
-int			check_map(t_piece p, t_ull *map, t_puzz l)
+int	check_map(t_piece p, t_ull *map, t_puzz l)
 {
 	int	result;
 
