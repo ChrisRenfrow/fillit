@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 15:31:10 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 15:42:35 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 16:12:06 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,10 +81,8 @@ t_piece	*total_reset(t_piece *pieces, t_puzz l)
 }
 
 /*
-** Calculates the max number of empty blocks that can be present in the puzzle
-** given the square size and number of pieces.
-** Also acts as the top level of recursion, increasing the square size if the
-** pieces can't fit in the previous square.
+** Runs fit_piece at the smallest possible square size,
+** and increments the square size if needed.
 */
 
 t_puzz	*initializer(t_piece *pieces, t_puzz *l)
