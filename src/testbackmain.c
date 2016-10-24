@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 09:54:14 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 11:02:31 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 14:51:32 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -302,24 +302,24 @@ int			main(void)
 	lr.label = 'S';
 	lr.order = 0;
 
-	vi.label = 'A';
+	ll.label = 'A';
 	hi.label = 'B';
-	dj.label = 'C';
-	hs.label = 'D';
-	square.label = 'E';
-	hz.label = 'F';
-	ll.label = 'G';
-	tee.label = 'H';
-	array = (t_piece *)ft_memalloc(sizeof(t_piece) * 8);
-	array[0] = vi;
+	ju.label = 'C';
+	hz.label = 'D';
+//	square.label = 'E';
+//	hz.label = 'F';
+//	ll.label = 'G';
+//	tee.label = 'H';
+	array = (t_piece *)ft_memalloc(sizeof(t_piece) * 4);
+	array[0] = ll;
 	array[1] = hi;
-	array[2] = dj;
-	array[3] = hs;
-	array[4] = square;
+	array[2] = ju;
+	array[3] = hz;
+/*	array[4] = square;
 	array[5] = hz;
 	array[6] = ll;
 	array[7] = tee;//
-/*	array[2] = vi;//
+	array[2] = vi;//
 	array[3] = hi;
 	array[4] = hi;//
 	array[5] = hi;//
@@ -340,7 +340,7 @@ int			main(void)
 	array[24] = dj;
 	array[25] = square;
 */
-	puzzle.pnbr = 8;
+	puzzle.pnbr = 4;
 	map_size = ft_sqrt(4 * puzzle.pnbr);
 
 	ai = -1;

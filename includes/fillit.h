@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 11:01:24 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 14:50:18 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,13 +19,11 @@ typedef unsigned long long t_ull;
 
 typedef	struct				s_puzzle
 {
-//	int						*po;
 	t_ull					*map;
 	int						sq_size;
 	int						pnbr;
 	int						shift;
 	int						mrow;
-//	int						eb_max;
 	int						pu;
 }							t_puzz;
 
@@ -59,7 +57,7 @@ t_puzz						eb_calculator(t_piece *pieces, t_puzz l);
 t_puzz	*starting_position(t_piece *p, t_puzz *l);
 t_puzz	*fit_piece(t_piece *p, t_puzz *l);
 t_puzz	*move_piece(t_piece *p, t_puzz *l);
-t_puzz	*edit_map(t_piece *p, t_puzz *l);
+t_puzz	*edit_map(t_piece *p, t_puzz *l, int status);
 int		check_bottom(t_piece p, t_puzz l);
 int		check_border(t_piece p, t_puzz l);
 void	map_maker(t_piece *pieces, t_puzz *legend);
