@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 10:26:52 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/20 18:43:15 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/22 21:20:00 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** border.
 */
 
-static int	check_bottom(t_piece p, t_puzz l)
+int	check_bottom(t_piece p, t_puzz l)
 {
 	int	i;
 
@@ -34,7 +34,7 @@ static int	check_bottom(t_piece p, t_puzz l)
 ** far right border.
 */
 
-static int	check_border(t_piece p, t_puzz l)
+int	check_border(t_piece p, t_puzz l)
 {
 	int	brd;
 	int	i;

@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 10:29:43 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/21 11:14:58 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/21 17:01:45 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 t_piece		edit_map(t_piece p, t_ull *map, t_puzz l, int status)
 {
+	int	printtest = 0;//
 	int	i;
 
 	i = -1;
@@ -39,6 +40,19 @@ t_piece		edit_map(t_piece p, t_ull *map, t_puzz l, int status)
 		l.po[0]--;
 		p.order = 0;
 	}
+	ft_putendl("12 editing map");//
+	ft_putstr("1 = paste, 0 = reset: ");//
+	ft_putnbr(p.placed);//
+	ft_putchar('\n');//
+	while (printtest++ < l.sq_size)//
+	{
+		ft_putstr("reuslt:");//
+		print_row(*map++, l.sq_size);//
+		ft_putchar('\n');//
+	}
+	ft_putchar(p.label);//
+	ft_putnbr(p.order);//
+	ft_putchar('\n');//
 	return (p);
 }
 
@@ -117,31 +131,35 @@ int			pieces_left(t_piece *p, t_puzz l)
 **		and reset all unused pieces to the appropriate horizontal value.
 */
 
-t_ull		*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz legend)
+t_ull		*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
 {
 	t_ull	*tail;
-	int		pu;
 	int		pl;
 
-	pl = pieces_left(p, legend);
-	if ((pu = starting_piece(p, legend)) == 42)
+	pl = pieces_left(p, l);
+	if (l.pu == l.pnbr)
 		return (map);
-	while (++pu < legend.pnbr && eb_nbr <= legend.eb_max)
-		if ((p[pu].placed) != 1)
+	if (l.pu < l.pnbr && eb_nbr <= l.eb_max)
+	{
+		if ((p[l.pu].placed) != 1)
 		{
-			if ((check_map(p[pu], map, legend)))
+			if ((check_map(p[l.pu], map, l)))
 			{
-				p[pu] = edit_map(p[pu], map, legend, 1);
-				legend = adjust_coord(p[pu], legend, map);
+				p[l.pu] = edit_map(p[l.pu], map, l, 1);
+				l = adjust_coord(p[l.pu], l, map);
 			}
-			if (p[pu].placed == 1 || --pl == 0)
-				if ((tail = move_bits(p, map, eb_nbr, legend)))
+			if (p[l.pu].placed == 1 || --pl == 0)
+				if ((tail = move_bits(p, map, eb_nbr, l)))
 					return (tail);
-			if (p[pu].placed == 1)
+			if (p[l.pu].placed == 1)
 			{
-				p[pu] = edit_map(p[pu], map, legend, 0);
-				p = reset_pieces(p, legend);
+				p[l.pu] = edit_map(p[l.pu], map, l, 0);
+				p = reset_pieces(p, l);
 			}
 		}
+			l.pu++;
+	}
+		if ((tail = fit_pieces(p, map, eb_nbr, l)))
+			return (tail);
 	return (NULL);
 }

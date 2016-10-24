@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 09:51:30 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/20 18:41:48 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/22 13:24:41 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 ** to the next row.
 */
 
-t_ull	*move_bits(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
+t_ull	*move_bits(t_piece *p,/* t_ull *map, int eb_nbr,*/ t_puzz l)
 {
 	int		pu;
 
@@ -28,11 +28,11 @@ t_ull	*move_bits(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
 		if (p[pu].placed != 1)
 		{
 			if (l.shift >= l.sq_size)
-				return (move_next_line(p, map, eb_nbr, l));
+				return (move_next_line(p,/* map, eb_nbr,*/ l));
 			else
-				return (shift_pieces(p, map, eb_nbr, l));
+				return (shift_pieces(p,/* map, eb_nbr,*/ l));
 		}
-	return (map);
+	return (l.map);
 }
 
 /*
@@ -65,13 +65,13 @@ int		count_empty(t_ull row, t_puzz l)
 ** as move all unused pieces back to their starting values.
 */
 
-t_ull	*move_next_line(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
+t_ull	*move_next_line(t_piece *p,/* t_ull *map, int eb_nbr,*/ t_puzz l)
 {
 	int		pu;
 	int		i;
 
 	pu = -1;
-	eb_nbr += count_empty(map[l.mrow], l);
+//	eb_nbr += count_empty(map[l.mrow], l);
 	while (++pu < l.pnbr)
 		if ((p[pu].placed) != 1)
 		{
@@ -81,7 +81,7 @@ t_ull	*move_next_line(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
 		}
 	l.shift = 0;
 	l.mrow++;
-	return (fit_pieces(p, map, eb_nbr, l));
+	return (fit_piece/*s*/(p,/* map, eb_nbr,*/ l));
 }
 
 /*
@@ -90,7 +90,7 @@ t_ull	*move_next_line(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
 ** tell if the current spot is occupied or not.
 */
 
-t_ull	*shift_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
+t_ull	*shift_pieces(t_piece *p,/* t_ull *map, int eb_nbr,*/ t_puzz l)
 {
 	int	pu;
 	int	i;
@@ -104,7 +104,7 @@ t_ull	*shift_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz l)
 				p[pu].r[i] = p[pu].r[i] << 1;
 		}
 	l.shift++;
-	return (fit_pieces(p, map, eb_nbr, l));
+	return (fit_piece/*s*/(p,/* map, eb_nbr,*/ l));
 }
 
 /*
