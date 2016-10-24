@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/12 23:27:10 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/19 17:52:52 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/21 19:58:13 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,8 +19,10 @@ int main(int argc, char *argv[])
 {
 	(void)argc;
 
-	int i = 0;
-	t_piece *ptr = process_input(argv[1]);
+	//int i = 0;
+	//t_piece *ptr = 
+	process_input(argv[1]);
+	/*
 	while (ptr->label)
 	{
 
@@ -31,5 +33,6 @@ int main(int argc, char *argv[])
 		
 		ptr++;
 	}
+	*/
 	return (0);
 }
