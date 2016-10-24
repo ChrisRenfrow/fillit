@@ -1,18 +1,48 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   new_map_maker.c                                    :+:      :+:    :+:   */
+/*   map_maker.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/22 20:20:42 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 14:52:41 by kdavis           ###   ########.fr       */
+/*   Created: 2016/10/24 15:31:10 by kdavis            #+#    #+#             */
+/*   Updated: 2016/10/24 15:42:35 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
 #include <stdlib.h>
+
+/*
+** Sorts the pieces by the row in which they were placed on the map.
+*/
+
+t_piece	*sort_pieces(t_piece *p, t_puzz l)
+{
+	t_piece	temp;
+	int		count;
+	int		i;
+
+	count = 1;
+	while (count != 0)
+	{
+		count = 0;
+		i = -1;
+		while ((++i + 1) < l.pnbr)
+		{
+			if (p[i].mrow > p[i + 1].mrow)
+			{
+				temp = p[i];
+				p[i] = p[i + 1];
+				p[i + 1] = temp;
+				count++;
+			}
+		}
+	}
+	i = -1;
+	return (p);
+}
 
 /*
 ** ft_sqrt gives the smallest square size that can be created given the number
@@ -57,7 +87,7 @@ t_piece	*total_reset(t_piece *pieces, t_puzz l)
 ** pieces can't fit in the previous square.
 */
 
-t_puzz	*eb_calculator(t_piece *pieces, t_puzz *l)
+t_puzz	*initializer(t_piece *pieces, t_puzz *l)
 {
 	t_puzz	*solved;
 	int		pu;
@@ -77,7 +107,7 @@ t_puzz	*eb_calculator(t_piece *pieces, t_puzz *l)
 	pieces = total_reset(pieces, *l);
 	ft_memdel((void *)&l->map);
 	l->sq_size++;
-	l = eb_calculator(pieces, l);
+	l = initializer(pieces, l);
 	return (l);
 }
 
@@ -88,6 +118,6 @@ t_puzz	*eb_calculator(t_piece *pieces, t_puzz *l)
 void	map_maker(t_piece *pieces, t_puzz *legend)
 {
 	legend->sq_size = ft_sqrt(4 * legend->pnbr);
-	legend = eb_calculator(pieces, legend);
+	legend = initializer(pieces, legend);
 	ft_memdel((void *)&legend->map);
 }

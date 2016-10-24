@@ -6,48 +6,12 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:35:55 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 11:37:28 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 15:24:10 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
-
-/*
-** Sorts the pieces by the row in which they were placed on the map.
-*/
-
-t_piece	*sort_pieces(t_piece *p, t_puzz l)
-{
-	t_piece	temp;
-	int		count;
-	int		i;
-
-	count = 1;
-	while (count != 0)
-	{
-		count = 0;
-		i = -1;
-		while ((++i + 1) < l.pnbr)
-		{
-			if (p[i].mrow > p[i + 1].mrow)
-			{
-				temp = p[i];
-				p[i] = p[i + 1];
-				p[i + 1] = temp;
-				count++;
-			}
-		}
-	}
-	i = -1;
-	while (++i < l.pnbr)//
-	{
-		ft_putnbr(p[i].mrow);//
-		ft_putchar(p[i].label);//
-		ft_putchar('\n');//
-	}
-	return (p);
-}
 
 /*
 ** If the first bit of mrow is 0 then '.' is printed and mrow is shifted.

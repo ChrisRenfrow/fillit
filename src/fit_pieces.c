@@ -6,12 +6,13 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/22 11:02:34 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 14:44:21 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 15:24:02 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
+#include <stdlib.h>
 
 /*
 ** Checks to see if the piece values are at the right border of the puzzle.

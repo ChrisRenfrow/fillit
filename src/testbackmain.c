@@ -6,28 +6,13 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 09:54:14 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 14:51:32 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 15:43:31 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
 #include <unistd.h>
-
-/*
-** Used to visulaize how the bit map operators work with each other.
-** Establish the square size. Test function.
-*/
-
-static int	ft_sqrt(int nbr)
-{
-	int	result;
-
-	result = 1;
-	while ((result * result) < nbr)
-		result++;
-	return (result);
-}
 
 void	print_row(t_ull row, int columns)
 {

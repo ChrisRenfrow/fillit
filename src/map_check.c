@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 10:26:52 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 14:50:05 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/24 15:56:25 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ int	check_border(t_piece p, t_puzz l)
 ** pieces that have been placed already.
 */
 
-static int	check_zone(t_piece p, t_ull *map, t_puzz l)
+int	check_zone(t_piece p, t_ull *map, t_puzz l)
 {
 	int	i;
 
