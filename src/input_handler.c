@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/19 17:48:47 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/21 21:26:38 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,10 @@
 #include "libft.h"
 #include "fillit.h"
 
-#define PIECEBYTES 21
+#include <stdio.h>
 
+#define PIECEBYTES 21
+/*
 int ft_strctchr(char *str, char c)
 {
 	int count;
@@ -31,7 +33,7 @@ int ft_strctchr(char *str, char c)
 	}
 	return (count);
 }
-
+*/
 int open_file(char *filename)
 {
 	int fd;
@@ -44,26 +46,76 @@ int open_file(char *filename)
 	else
 		return (fd);
 }
-
-t_piece	make_piece(char *input, int label, int i)
+// Binary to unsigned long long
+t_ull *ft_btoull(int *bin)
 {
-	// Need to do math to make bit-map version of the piece
-	(void)input;
+	int i;
+	int j;
 
-	t_piece piece;
-	piece.placed = 0;
-	piece.order = i; // -1 if not determined
-	piece.label = label;
-	// Assign values to r[4] and a[4]
-	/*
-	while(i < 3)
+	i = 16;
+	j = 0;
+	t_ull *ll = (t_ull*)malloc(sizeof(t_ull) * 4);
+	while(i >= 0)
 	{
-		t_ull map = bitmath(input);
-		r[i] = map;
-		a[i] = map;
+		if (i % 4 == 0)
+			j++;
+		else 
+			ll[j] = (ll[j]<<1) + bin[i];	
+		i--;
+	}
+	return (ll);
+}
+
+int *bitmath(char *input)
+{	
+	int *bin;
+	int i;
+	int j;
+
+	i = 0;
+	j = 0;
+	bin = (int *)malloc(sizeof(int) * 16);
+	while(input[i])
+	{	
+		if (input[i] == '.')
+			bin[j++] = 0;
+		else if (input[i] == '#')
+			bin[j++] = 1;
 		i++;
 	}
-	*/
+	return (bin);
+}
+
+t_piece	make_piece(char *input, int label)
+{
+	// Need to do math to make bit-map version of the piece
+	int *tmp = bitmath(input);
+	t_ull *tmpull = ft_btoull(tmp);
+	int i = 4;
+	int j = 0;
+	puts("- Input -\n");
+	//puts(input);
+	while(j <= 20)
+	{
+		if (j % 5 == 0)
+		{
+			//j++;
+			ft_putchar('\n');
+		}
+		else
+			ft_putchar(input[j]);
+		j++;
+	}
+	puts("- Binary to ULL -\n");
+	while (i)
+	{
+		printf("Row: %d Value: %llu\n", -(i - 4), tmpull[i]);
+		i--;
+	}	
+	t_piece piece;
+	piece.placed = 0;
+	piece.order = -1; // -1 if undetermined
+	piece.label = label;
 	return (piece);
 }
 
@@ -104,7 +156,7 @@ t_piece *process_input(char *filename)
 		}
 		if (is_valid_block(buffer) >= 0)
 		{
-			pieces[i] = make_piece(buffer, label++, is_valid_block(buffer));
+			pieces[i] = make_piece(buffer, label++);
 			i++;
 		}
 		if (ret == 20)
