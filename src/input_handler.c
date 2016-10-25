@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/25 16:24:07 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/25 16:31:41 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int ft_strctchr(char *str, char c)
 	return (count);
 }
 */
+
 int open_file(char *filename)
 {
 	int fd;
@@ -194,7 +195,7 @@ t_piece *process_input(char *filename)
 		cur_buf += PIECEBYTES;
 		if (cur_buf > max_buf)
 		{
-			ft_putstr("Fuck you and all your pieces.\n");
+			ft_putstr("Fuck you and all your mom.\n");
 			free(buffer);
 			free(pieces);
 			return (NULL);
