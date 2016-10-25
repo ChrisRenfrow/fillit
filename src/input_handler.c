@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/21 21:26:38 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/25 14:55:09 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ int ft_strctchr(char *str, char c)
 	return (count);
 }
 */
+
 int open_file(char *filename)
 {
 	int fd;
@@ -46,27 +47,27 @@ int open_file(char *filename)
 	else
 		return (fd);
 }
-// Binary to unsigned long long
+
 t_ull *ft_btoull(int *bin)
 {
 	int i;
 	int j;
 
-	i = 16;
-	j = 0;
+	i = 18;
+	j = 1;
 	t_ull *ll = (t_ull*)malloc(sizeof(t_ull) * 4);
 	while(i >= 0)
 	{
-		if (i % 4 == 0)
+		if (i % 5 == 4)
 			j++;
-		else 
+		//else 
 			ll[j] = (ll[j]<<1) + bin[i];	
 		i--;
 	}
 	return (ll);
 }
 
-int *bitmath(char *input)
+int *intobin(char *input)
 {	
 	int *bin;
 	int i;
@@ -74,7 +75,7 @@ int *bitmath(char *input)
 
 	i = 0;
 	j = 0;
-	bin = (int *)malloc(sizeof(int) * 16);
+	bin = (int *)malloc(sizeof(int) * 20);
 	while(input[i])
 	{	
 		if (input[i] == '.')
@@ -86,18 +87,53 @@ int *bitmath(char *input)
 	return (bin);
 }
 
+t_ull *piece_shift(t_ull *row)
+{
+	int i;
+	//int j;
+
+	i = 0;
+	while (i < 3)
+	{
+		if (row[i] == 0)
+		{
+			row[i] = row[i + 1];
+			row[i + 1] = 0;
+		}	
+		i++;
+	}/*
+	while ("ur mom")
+	{
+		j = 0;
+		while (j < 4)
+		{
+			if (row[j] % 2 != 0)
+				return row;
+			j++;	
+		}
+		i = 0;
+		while (i < 4)
+		{
+			row[i] = row[i]>>1;
+			i++;
+		}
+	}
+	*/
+	return (row);
+}
+
 t_piece	make_piece(char *input, int label)
 {
-	// Need to do math to make bit-map version of the piece
-	int *tmp = bitmath(input);
+	// Need to do math to make bit-map version of the piece 
+	int *tmp = intobin(ft_strctrim(input, '.'));
 	t_ull *tmpull = ft_btoull(tmp);
+	tmpull = piece_shift(tmpull);
 	int i = 4;
 	int j = 0;
 	puts("- Input -\n");
-	//puts(input);
-	while(j <= 20)
+	while(j < 20)
 	{
-		if (j % 5 == 0)
+		if (j % 5 == 4)
 		{
 			//j++;
 			ft_putchar('\n');
@@ -143,7 +179,7 @@ t_piece *process_input(char *filename)
 		cur_buf += PIECEBYTES;
 		if (cur_buf > max_buf)
 		{
-			ft_putstr("Fuck you and all your pieces.\n");
+			ft_putstr("Fuck you and all your mom.\n");
 			free(buffer);
 			free(pieces);
 			return (NULL);
