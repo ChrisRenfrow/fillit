@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/21 21:26:38 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/25 16:24:07 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,71 +46,122 @@ int open_file(char *filename)
 	else
 		return (fd);
 }
-// Binary to unsigned long long
-t_ull *ft_btoull(int *bin)
-{
-	int i;
-	int j;
 
-	i = 16;
-	j = 0;
-	t_ull *ll = (t_ull*)malloc(sizeof(t_ull) * 4);
-	while(i >= 0)
+/*
+** Shift_piece shifts the pieces to the top left of their grid.
+*/
+
+t_ull	*shift_piece(t_ull *tmpull)
+{
+	int	swap;
+	int	i;
+
+	swap = 1;
+	while (swap--)
 	{
-		if (i % 4 == 0)
+		i = -1;
+		while (++i < 3)
+			if (tmpull[i] == 0 && tmpull[i + 1] != 0)
+			{
+				tmpull[i] = tmpull[i + 1];
+				tmpull[i + 1] = 0;
+				swap = 1;
+			}
+	}
+	while ("mom jokes exist")
+	{
+		i = -1;
+		while (++i < 3)
+			if (tmpull[i] % 2 != 0)
+				return (tmpull);
+		i = -1;
+		while (++i < 4)
+			tmpull[i] = tmpull[i] >> 1;
+	}
+}
+
+/*
+** Converts the int array obtained from bitmath into an array of
+** unsigned long longs where each index of the array represents
+** a row of the piece.
+*/
+
+t_ull	*ft_btoull(int *bin)
+{
+	t_ull	*ll;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if(!(ll = (t_ull*)ft_memalloc(sizeof(t_ull) * 4)))
+		return (NULL);
+	while(i < 20)
+	{
+		if (i % 5 == 4)
 			j++;
 		else 
-			ll[j] = (ll[j]<<1) + bin[i];	
-		i--;
+			ll[j] += bin[i] << ((i % 5) * bin[i]);
+		i++;
 	}
 	return (ll);
 }
 
-int *bitmath(char *input)
+/*
+** Creates an array of of 1's and 0's from the input to represent
+** the bitmap for each piece. Used in combination with ft_btoull to
+** return a temp ull array that will be used to load the pieces bitmap.
+*/
+
+t_ull	*bitmath(char *input)
 {	
-	int *bin;
-	int i;
-	int j;
+	int 	*bin;
+	t_ull	*tmpull;
+	int 	i;
 
 	i = 0;
-	j = 0;
-	bin = (int *)malloc(sizeof(int) * 16);
-	while(input[i])
+	if (!(bin = (int *)ft_memalloc(sizeof(int) * 20)))
+			return (NULL);
+	while(i < 20)
 	{	
 		if (input[i] == '.')
-			bin[j++] = 0;
+			bin[i++] = 0;
 		else if (input[i] == '#')
-			bin[j++] = 1;
-		i++;
+			bin[i++] = 1;
 	}
-	return (bin);
+	if (!(tmpull = ft_btoull(bin)))
+	{
+		free(bin);
+		return (NULL);
+	}
+	tmpull = shift_piece(tmpull);
+	return (tmpull);
 }
 
 t_piece	make_piece(char *input, int label)
 {
 	// Need to do math to make bit-map version of the piece
-	int *tmp = bitmath(input);
-	t_ull *tmpull = ft_btoull(tmp);
-	int i = 4;
+	t_ull *tmpull = bitmath(input);
+	int i = 0;
 	int j = 0;
 	puts("- Input -\n");
 	//puts(input);
-	while(j <= 20)
+	while(j < 20)//
 	{
-		if (j % 5 == 0)
+		if (j % 5 == 4)//
 		{
 			//j++;
-			ft_putchar('\n');
+			ft_putchar('\n');//
 		}
 		else
-			ft_putchar(input[j]);
-		j++;
+			ft_putchar(input[j]);//
+		j++;//
 	}
 	puts("- Binary to ULL -\n");
-	while (i)
+	while (i < 4)
 	{
-		printf("Row: %d Value: %llu\n", -(i - 4), tmpull[i]);
-		i--;
+		printf("Row: %d Value: %llu\n", i + 1, tmpull[i]);
+		i++;
 	}	
 	t_piece piece;
 	piece.placed = 0;
