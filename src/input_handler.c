@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/25 18:39:08 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/26 14:52:26 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,26 +143,28 @@ t_piece	make_piece(char *input, int label)
 	// Need to do math to make bit-map version of the piece
 	t_piece piece;
 	t_ull *tmpull = bitmath(input);
+	
 	int i = 0;
-	int j = 0;
-	puts("- Input -\n");
+	//int j = 0;
+	//puts("- Input -\n");
 	//puts(input);
-	while(j < 20)//
+	//
+	/*
+	while(j < 20)
 	{
-		if (j % 5 == 4)//
-		{
-			ft_putchar('\n');//
-		}
+		if (j % 5 == 4)
+			ft_putchar('\n');
 		else
-			ft_putchar(input[j]);//
-		j++;//
+			ft_putchar(input[j]);
+		j++;
 	}
-	puts("- Binary to ULL -\n");//
+	*/
+	//puts("- Binary to ULL -\n");
 	while (i < 4)
 	{
 		piece.r[i] = tmpull[i];
 		piece.a[i] = tmpull[i];
-		printf("Row: %d Value: %llu\n", i + 1, piece.r[i]);//
+		//printf("Row: %d Value: %llu\n", i + 1, piece.r[i]);//
 		i++;//
 	}	
 	ft_memdel((void *)&tmpull);

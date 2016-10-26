@@ -1,0 +1,27 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    report01.txt                                       :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2016/10/26 15:06:06 by crenfrow          #+#    #+#              #
+#    Updated: 2016/10/26 15:10:53 by crenfrow         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
+fillit QA report
+
+crenfrow@e1z2r3p35[work/uni_16/fillit_workspace/fillit]% time ./fillit tests/trouble01.txt
+.ABBC.DDE.F
+.AB.CCDDE.F
+AABGCH.IEFF
+..GGGHIIEK.
+JJJ.HHMISK.
+OOJLLLMMSKK
+ON.PLYYMSS.
+ONQPPYWWWXX
+NNQQPYVWXXU
+RRQ..TVVZZU
+.RRTTTVZZUU
+./fillit tests/trouble01.txt  36.77s user 0.06s system 99% cpu 36.914 total
