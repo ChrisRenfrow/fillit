@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/25 16:31:41 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/25 18:39:08 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,11 +130,10 @@ t_ull	*bitmath(char *input)
 		else if (input[i] == '#')
 			bin[i++] = 1;
 	}
-	if (!(tmpull = ft_btoull(bin)))
-	{
-		free(bin);
+	tmpull = ft_btoull(bin);
+	ft_memdel((void *)&bin);
+	if (!(tmpull))
 		return (NULL);
-	}
 	tmpull = shift_piece(tmpull);
 	return (tmpull);
 }
@@ -142,6 +141,7 @@ t_ull	*bitmath(char *input)
 t_piece	make_piece(char *input, int label)
 {
 	// Need to do math to make bit-map version of the piece
+	t_piece piece;
 	t_ull *tmpull = bitmath(input);
 	int i = 0;
 	int j = 0;
@@ -151,27 +151,27 @@ t_piece	make_piece(char *input, int label)
 	{
 		if (j % 5 == 4)//
 		{
-			//j++;
 			ft_putchar('\n');//
 		}
 		else
 			ft_putchar(input[j]);//
 		j++;//
 	}
-	puts("- Binary to ULL -\n");
+	puts("- Binary to ULL -\n");//
 	while (i < 4)
 	{
-		printf("Row: %d Value: %llu\n", i + 1, tmpull[i]);
-		i++;
+		piece.r[i] = tmpull[i];
+		piece.a[i] = tmpull[i];
+		printf("Row: %d Value: %llu\n", i + 1, piece.r[i]);//
+		i++;//
 	}	
-	t_piece piece;
+	ft_memdel((void *)&tmpull);
 	piece.placed = 0;
-	piece.order = -1; // -1 if undetermined
 	piece.label = label;
 	return (piece);
 }
 
-t_piece *process_input(char *filename)
+t_piece *process_input(char *filename, t_puzz *legend)
 {
 	int 	fd;
 	int		ret;
@@ -186,6 +186,7 @@ t_piece *process_input(char *filename)
 	max_buf = PIECEBYTES * 26;
 	cur_buf = 0;
 	label = 'A';
+	legend->pnbr = 0;
 	char *buffer = ft_memalloc(PIECEBYTES + 1);
 	fd = open_file(filename);
 	if (fd == 0)
@@ -211,6 +212,7 @@ t_piece *process_input(char *filename)
 			pieces[i] = make_piece(buffer, label++);
 			i++;
 		}
+		legend->pnbr++;
 		if (ret == 20)
 			return (pieces);	
 	}	

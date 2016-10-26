@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 09:54:14 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 15:43:31 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/25 17:59:15 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int			main(void)
 	t_piece	*array;
 //	t_ull	*map;
 	t_puzz	puzzle;	
-	int		map_size;
+//	int		map_size;
 	int		pi;
 	int		ai;
 //	int		hii;
@@ -69,7 +69,6 @@ int			main(void)
 	hz.a[3] = 0;
 	hz.placed = 0;
 	hz.label = 'A';
-	hz.order = 0;
 
 	square.r[0] = 3;
 	square.r[1] = 3;
@@ -81,7 +80,6 @@ int			main(void)
 	square.a[3] = 0;
 	square.placed = 0;
 	square.label = 'B';
-	square.order = 0;
 
 	hi.r[0] = 15;
 	hi.r[1] = 0;
@@ -93,7 +91,6 @@ int			main(void)
 	hi.a[3] = 0;
 	hi.placed = 0;
 	hi.label = 'C';
-	hi.order = 0;
 
 	vs.r[0] = 1;
 	vs.r[1] = 3;
@@ -105,7 +102,6 @@ int			main(void)
 	vs.a[3] = 0;
 	vs.placed = 0;
 	vs.label = 'D';
-	vs.order = 0;
 
 	tee.r[0] = 7;
 	tee.r[1] = 2;
@@ -117,7 +113,6 @@ int			main(void)
 	tee.a[3] = 0;
 	tee.placed = 0;
 	tee.label = 'E';
-	tee.order = 0;
 	
 	tup.r[0] = 2;
 	tup.r[1] = 7;
@@ -129,7 +124,6 @@ int			main(void)
 	tup.a[3] = 0;
 	tup.placed = 0;
 	tup.label = 'F';
-	tup.order = 0;
 
 	tl.r[0] = 2;
 	tl.r[1] = 3;
@@ -141,7 +135,6 @@ int			main(void)
 	tl.a[3] = 0;
 	tl.placed = 0;
 	tl.label = 'G';
-	tl.order = 0;
 	
 	vi.r[0] = 1;
 	vi.r[1] = 1;
@@ -153,7 +146,6 @@ int			main(void)
 	vi.a[3] = 1;
 	vi.placed = 0;
 	vi.label = 'H';
-	vi.order = 0;
 
 	dj.r[0] = 7;
 	dj.r[1] = 4;
@@ -165,7 +157,6 @@ int			main(void)
 	dj.a[3] = 0;
 	dj.placed = 0;
 	dj.label = 'I';
-	dj.order = 0;
 
 	ll.r[0] = 3;
 	ll.r[1] = 2;
@@ -177,7 +168,6 @@ int			main(void)
 	ll.a[3] = 0;
 	ll.placed = 0;
 	ll.label = 'J';
-	ll.order = 0;
 
 	hs.r[0] = 6;
 	hs.r[1] = 3;
@@ -189,7 +179,6 @@ int			main(void)
 	hs.a[3] = 0;
 	hs.placed = 0;
 	hs.label = 'K';
-	hs.order = 0;
 
 	j.r[0] = 2;
 	j.r[1] = 2;
@@ -201,7 +190,6 @@ int			main(void)
 	j.a[3] = 0;
 	j.placed = 0;
 	j.label = 'L';
-	j.order = 0;
 
 	tr.r[0] = 1;
 	tr.r[1] = 3;
@@ -213,7 +201,6 @@ int			main(void)
 	tr.a[3] = 0;
 	tr.placed = 0;
 	tr.label = 'M';
-	tr.order = 0;
 
 	ld.r[0] = 7;
 	ld.r[1] = 1;
@@ -225,7 +212,6 @@ int			main(void)
 	ld.a[3] = 0;
 	ld.placed = 0;
 	ld.label = 'N';
-	ld.order = 0;
 	
 	vz.r[0] = 2;
 	vz.r[1] = 3;
@@ -237,7 +223,6 @@ int			main(void)
 	vz.a[3] = 0;
 	vz.placed = 0;
 	vz.label = 'O';
-	vz.order = 0;
 
 	ju.r[0] = 1;
 	ju.r[1] = 7;
@@ -249,7 +234,6 @@ int			main(void)
 	ju.a[3] = 0;
 	ju.placed = 0;
 	ju.label = 'P';
-	ju.order = 0;
 	
 	jr.r[0] = 3;
 	jr.r[1] = 1;
@@ -261,7 +245,6 @@ int			main(void)
 	jr.a[3] = 0;
 	jr.placed = 0;
 	jr.label = 'Q';
-	jr.order = 0;
 
 	lu.r[0] = 4;
 	lu.r[1] = 7;
@@ -273,7 +256,6 @@ int			main(void)
 	lu.a[3] = 0;
 	lu.placed = 0;
 	lu.label = 'R';
-	lu.order = 0;
 
 	lr.r[0] = 1;
 	lr.r[1] = 1;
@@ -285,7 +267,6 @@ int			main(void)
 	lr.a[3] = 0;
 	lr.placed = 0;
 	lr.label = 'S';
-	lr.order = 0;
 
 	ll.label = 'A';
 	hi.label = 'B';
@@ -326,7 +307,7 @@ int			main(void)
 	array[25] = square;
 */
 	puzzle.pnbr = 4;
-	map_size = ft_sqrt(4 * puzzle.pnbr);
+//	map_size = ft_sqrt(4 * puzzle.pnbr);
 
 	ai = -1;
 	while (++ai < puzzle.pnbr)

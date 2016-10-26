@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 16:00:45 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/25 18:36:13 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef	struct		s_piece
 	t_ull			r[4];
 	t_ull			a[4];
 	int				placed;
-	int				order;
 	int				shift;
 	int				mrow;
 	unsigned char	label;
@@ -41,8 +40,8 @@ typedef	struct		s_piece
 /*
 ** map_maker.c functions
 */
-t_puzz				*initializer(t_piece *pieces, t_puzz *l);
 t_piece				*sort_pieces(t_piece *p, t_puzz l);
+t_puzz				*initializer(t_piece *pieces, t_puzz *l);
 t_piece				*total_reset(t_piece *pieces, t_puzz l);
 int					ft_sqrt(int nbr);
 void				map_maker(t_piece *pieces, t_puzz *legend);
@@ -71,6 +70,7 @@ t_piece				print_char(t_piece p, t_ull *mrow, int *col, int *paste);
 t_piece				*print_reset(t_piece *p, t_puzz l);
 void				print_solution(t_piece *p, t_ull *map, t_puzz l);
 
+t_piece				*process_input(char *filename, t_puzz *legend);
 char				*ft_strchrrm(char *input, char c);
 char				*ft_strctrim(char *input, char c);
 
