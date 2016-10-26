@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 18:16:18 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/25 19:02:29 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/25 19:03:47 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ int	main(int argc, char **argv)
 		ft_putendl("usage: ./fillit file");
 	else
 	{
-		if(!(pieces = process_input(argv[1], &legend)))
+		if (!(pieces = process_input(argv[1], &legend)))
 		{
 			ft_putendl("error");
 			return (-1);
