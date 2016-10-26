@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 15:31:10 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 16:12:06 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/25 18:59:57 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -107,15 +107,4 @@ t_puzz	*initializer(t_piece *pieces, t_puzz *l)
 	l->sq_size++;
 	l = initializer(pieces, l);
 	return (l);
-}
-
-/*
-** Initializes the square size and activates the recursion loop.
-*/
-
-void	map_maker(t_piece *pieces, t_puzz *legend)
-{
-	legend->sq_size = ft_sqrt(4 * legend->pnbr);
-	legend = initializer(pieces, legend);
-	ft_memdel((void *)&legend->map);
 }

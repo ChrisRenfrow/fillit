@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/25 18:36:13 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/25 18:59:53 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ t_piece				*sort_pieces(t_piece *p, t_puzz l);
 t_puzz				*initializer(t_piece *pieces, t_puzz *l);
 t_piece				*total_reset(t_piece *pieces, t_puzz l);
 int					ft_sqrt(int nbr);
-void				map_maker(t_piece *pieces, t_puzz *legend);
 
 /*
 ** fit_pieces.c functions

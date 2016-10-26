@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 18:16:18 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/25 18:41:20 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/25 19:02:29 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,10 @@ int	main(int argc, char **argv)
 			ft_putendl("error");
 			return (-1);
 		}
-		map_maker(pieces, &legend);
+		legend.sq_size = ft_sqrt(4 * legend.pnbr);
+		initializer(pieces, &legend);
+		ft_memdel((void *)legend.map);
+		ft_memdel((void *)&pieces);
 	}
 	return (0);
 }
