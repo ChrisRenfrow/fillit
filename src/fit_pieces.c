@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 15:31:21 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 16:07:09 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/26 17:11:29 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,17 +27,11 @@ t_puzz	*move_piece(t_piece *p, t_puzz *l)
 	i = -1;
 	if (l->shift >= l->sq_size)
 	{
-		while (++i < 4)
-			p[l->pu].r[i] = p[l->pu].a[i];
 		l->shift = 0;
 		l->mrow++;
 	}
 	else
-	{
-		while (++i < 4)
-			p[l->pu].r[i] = p[l->pu].r[i] << 1;
 		l->shift++;
-	}
 	p[l->pu].mrow = l->mrow;
 	p[l->pu].shift = l->shift;
 	return (fit_piece(p, l));
@@ -58,6 +52,7 @@ t_puzz	*edit_map(t_piece *p, t_puzz *l, int status)
 	{
 		l->pu--;
 		l->mrow = p[l->pu].mrow;
+		l->shift = p[l->pu].shift;
 	}
 	while (++i < 4)
 		l->map[l->mrow + i] = p[l->pu].r[i] ^ l->map[l->mrow + i];
@@ -110,11 +105,15 @@ t_puzz	*starting_position(t_piece *p, t_puzz *l)
 
 t_puzz	*fit_piece(t_piece *p, t_puzz *l)
 {
-	t_puzz *solved;
+	t_puzz	*solved;
+	int		i;
 
 	if (l->pu == l->pnbr)
 		return (l);
 	l = starting_position(p, l);
+	i = -1;
+	while (++i < 4)
+		p[l->pu].r[i] = p[l->pu].a[i] << l->shift;
 	p[l->pu].placed = 1;
 	if (check_map(p[l->pu], l->map, *l))
 	{
@@ -123,10 +122,8 @@ t_puzz	*fit_piece(t_piece *p, t_puzz *l)
 		l = edit_map(p, l, 0);
 	}
 	if ((check_bottom(p[l->pu], *l)) || (check_border(p[l->pu], *l)))
-	{
 		if ((solved = move_piece(p, l)))
 			return (solved);
-		p[l->pu].placed = 0;
-	}
+	p[l->pu].placed = 0;
 	return (NULL);
 }

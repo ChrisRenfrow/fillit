@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/25 18:39:08 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/26 13:43:48 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -144,7 +144,7 @@ t_piece	make_piece(char *input, int label)
 	t_piece piece;
 	t_ull *tmpull = bitmath(input);
 	int i = 0;
-	int j = 0;
+	int j = 0;//
 	puts("- Input -\n");
 	//puts(input);
 	while(j < 20)//
@@ -163,11 +163,13 @@ t_piece	make_piece(char *input, int label)
 		piece.r[i] = tmpull[i];
 		piece.a[i] = tmpull[i];
 		printf("Row: %d Value: %llu\n", i + 1, piece.r[i]);//
-		i++;//
+		i++;
 	}	
 	ft_memdel((void *)&tmpull);
 	piece.placed = 0;
 	piece.label = label;
+	piece.shift = 0;
+	piece.mrow = 0;
 	return (piece);
 }
 
@@ -216,5 +218,5 @@ t_piece *process_input(char *filename, t_puzz *legend)
 		if (ret == 20)
 			return (pieces);	
 	}	
-	return (pieces);
+	return (NULL);
 }

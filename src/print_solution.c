@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:35:55 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/24 16:07:21 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/26 17:05:56 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ t_ull	print_empty(t_ull mrow, int *col, int *paste)
 		ft_putchar('.');
 		mrow = mrow >> 1;
 		(*col)++;
-		*paste = 0;
+		*paste = 1;
 	}
 	return (mrow);
 }
