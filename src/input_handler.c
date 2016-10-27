@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/27 11:32:11 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 14:56:23 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,12 +103,26 @@ t_piece		make_piece(char *input, int label)
 ** Initializes i, max_buf, cur_buf, and label for the process_input function.
 */
 
-static char	initializer(int *i, size_t *buf)
+char	initializer(int *i, size_t *buf)
 {
 	*(i + 2) = 0;
 	*buf = PIECEBYTES * 26;
 	*(buf + 1) = 0;
 	return ('A');
+}
+
+int		check_nl_ct(char *input)
+{
+	int i;
+	
+	i = 0;
+	while (input[i])
+	{
+		if (i % 5 == 4 && input[i] != '\n')
+			return (0);
+		i++;
+	}
+	return (1);
 }
 
 /*
@@ -134,6 +148,8 @@ t_piece		*process_input(t_puzz *legend, int fd)
 		if (buffs[1] > buffs[0])
 			return (freer((void *)pieces));
 		if ((op[1] = read(fd, buffer, PIECEBYTES)) == -1)
+			return (freer((void *)pieces));
+		if (!check_nl_ct(buffer))
 			return (freer((void *)pieces));
 		if ((op[0] = is_valid_block(buffer)) >= 0)
 			pieces[op[2]++] = make_piece(buffer, label++);
