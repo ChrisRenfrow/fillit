@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/27 11:26:00 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 11:32:11 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,14 +16,13 @@
 
 #define PIECEBYTES 21
 
-
 /*
 ** Converts the int array obtained from bitmath into an array of
 ** unsigned long longs where each index of the array represents
 ** a row of the piece.
 */
 
-t_ull	*ft_btoull(int *bin)
+t_ull		*ft_btoull(int *bin)
 {
 	t_ull	*ll;
 	int		i;
@@ -118,7 +117,7 @@ static char	initializer(int *i, size_t *buf)
 */
 
 t_piece		*process_input(t_puzz *legend, int fd)
-{	
+{
 	int		op[3];
 	size_t	buffs[2];
 	char	buffer[PIECEBYTES + 1];

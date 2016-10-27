@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 18:16:18 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/27 11:25:22 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 11:30:04 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@ t_ull	*shift_piece(t_ull *tmpull)
 /*
 ** frees the pointer and returns NULL.
 */
+
 void	*freer(void *ptr)
 {
 	free(ptr);
