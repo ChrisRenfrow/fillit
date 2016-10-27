@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/26 13:43:48 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/26 20:22:49 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,28 +16,12 @@
 #include "libft.h"
 #include "fillit.h"
 
-#include <stdio.h>
-
 #define PIECEBYTES 21
-/*
-int ft_strctchr(char *str, char c)
-{
-	int count;
 
-	count = 0;
-	while (*str)
-	{
-		if (*str == c)
-			count++;
-		str++;
-	}
-	return (count);
-}
-*/
-
-int open_file(char *filename)
+int		open_file(char *filename)
 {
-	int fd;
+	int	fd;
+
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
@@ -95,13 +79,13 @@ t_ull	*ft_btoull(int *bin)
 
 	i = 0;
 	j = 0;
-	if(!(ll = (t_ull*)ft_memalloc(sizeof(t_ull) * 4)))
+	if (!(ll = (t_ull*)ft_memalloc(sizeof(t_ull) * 4)))
 		return (NULL);
-	while(i < 20)
+	while (i < 20)
 	{
 		if (i % 5 == 4)
 			j++;
-		else 
+		else
 			ll[j] += bin[i] << ((i % 5) * bin[i]);
 		i++;
 	}
@@ -114,17 +98,17 @@ t_ull	*ft_btoull(int *bin)
 ** return a temp ull array that will be used to load the pieces bitmap.
 */
 
-t_ull	*bitmath(char *input)
-{	
-	int 	*bin;
+t_ull		*bitmath(char *input)
+{
+	int		*bin;
 	t_ull	*tmpull;
-	int 	i;
+	int		i;
 
 	i = 0;
 	if (!(bin = (int *)ft_memalloc(sizeof(int) * 20)))
-			return (NULL);
-	while(i < 20)
-	{	
+		return (NULL);
+	while (i < 20)
+	{
 		if (input[i] == '.')
 			bin[i++] = 0;
 		else if (input[i] == '#')
@@ -138,33 +122,20 @@ t_ull	*bitmath(char *input)
 	return (tmpull);
 }
 
-t_piece	make_piece(char *input, int label)
+t_piece		make_piece(char *input, int label)
 {
-	// Need to do math to make bit-map version of the piece
-	t_piece piece;
-	t_ull *tmpull = bitmath(input);
-	int i = 0;
-	int j = 0;//
-	puts("- Input -\n");
-	//puts(input);
-	while(j < 20)//
-	{
-		if (j % 5 == 4)//
-		{
-			ft_putchar('\n');//
-		}
-		else
-			ft_putchar(input[j]);//
-		j++;//
-	}
-	puts("- Binary to ULL -\n");//
+	int		i;
+	t_piece	piece;
+	t_ull	*tmpull;
+
+	tmpull = bitmath(input);
+	i = 0;
 	while (i < 4)
 	{
 		piece.r[i] = tmpull[i];
 		piece.a[i] = tmpull[i];
-		printf("Row: %d Value: %llu\n", i + 1, piece.r[i]);//
 		i++;
-	}	
+	}
 	ft_memdel((void *)&tmpull);
 	piece.placed = 0;
 	piece.label = label;
@@ -173,50 +144,48 @@ t_piece	make_piece(char *input, int label)
 	return (piece);
 }
 
-t_piece *process_input(char *filename, t_puzz *legend)
+void		*freer(void *ptr)
 {
-	int 	fd;
-	int		ret;
-	int 	i;
-	size_t	max_buf;
-	size_t	cur_buf;
-	t_piece *pieces = (t_piece *)ft_memalloc(sizeof(t_piece) * (26 + 1));
-	char 	label;
+	free(ptr);
+	return (NULL);
+}
 
-	ret = 1;
-	i = 0;
-	max_buf = PIECEBYTES * 26;
-	cur_buf = 0;
+/*
+** ops[] = { fd, ret, i }
+** buffs[] = { max_buf, cur_buf }
+*/
+
+t_piece		*process_input(char *filename, t_puzz *legend)
+{	
+	int		op[3];
+	size_t	buffs[2];
+	char	buffer[PIECEBYTES + 1];
+	t_piece	*pieces;
+	char	label;
+
+	op[2] = 0;
+	buffs[0] = PIECEBYTES * 26;
+	buffs[1] = 0;
 	label = 'A';
 	legend->pnbr = 0;
-	char *buffer = ft_memalloc(PIECEBYTES + 1);
-	fd = open_file(filename);
-	if (fd == 0)
+	if (!(pieces = (t_piece *)ft_memalloc(sizeof(t_piece) * (26 + 1))))
 		return (NULL);
-	while (ret)
+	if (!(op[0] = open_file(filename)))
+		return (NULL);
+	while ("pokemon go is dead")
 	{
-		cur_buf += PIECEBYTES;
-		if (cur_buf > max_buf)
-		{
-			ft_putstr("Fuck you and all your mom.\n");
-			free(buffer);
-			free(pieces);
+		buffs[1] += PIECEBYTES;
+		if (buffs[1] > buffs[0])
+			return (freer((void *)pieces));
+		op[1] = read(op[0], buffer, PIECEBYTES);
+		if (op[1] == -1 || op[1] == 0)
 			return (NULL);
-		}
-		ret = read(fd, buffer, PIECEBYTES);
-		if (ret == -1)
-		{
-			ft_putstr("Read error occured.\n");
-			return (NULL);
-		}
 		if (is_valid_block(buffer) >= 0)
-		{
-			pieces[i] = make_piece(buffer, label++);
-			i++;
-		}
+			pieces[op[2]++] = make_piece(buffer, label++);
+		else
+			return (NULL);
 		legend->pnbr++;
-		if (ret == 20)
-			return (pieces);	
-	}	
-	return (NULL);
+		if (op[1] == 20)
+			return (pieces);
+	}
 }
