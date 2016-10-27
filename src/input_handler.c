@@ -6,64 +6,16 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/26 20:22:49 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 11:26:00 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
 #include "libft.h"
 #include "fillit.h"
 
 #define PIECEBYTES 21
 
-int		open_file(char *filename)
-{
-	int	fd;
-
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
-	{
-		ft_putstr("File missing or invalid.\n");
-		return (0);
-	}
-	else
-		return (fd);
-}
-
-/*
-** Shift_piece shifts the pieces to the top left of their grid.
-*/
-
-t_ull	*shift_piece(t_ull *tmpull)
-{
-	int	swap;
-	int	i;
-
-	swap = 1;
-	while (swap--)
-	{
-		i = -1;
-		while (++i < 3)
-			if (tmpull[i] == 0 && tmpull[i + 1] != 0)
-			{
-				tmpull[i] = tmpull[i + 1];
-				tmpull[i + 1] = 0;
-				swap = 1;
-			}
-	}
-	while ("mom jokes exist")
-	{
-		i = -1;
-		while (++i < 3)
-			if (tmpull[i] % 2 != 0)
-				return (tmpull);
-		i = -1;
-		while (++i < 4)
-			tmpull[i] = tmpull[i] >> 1;
-	}
-}
 
 /*
 ** Converts the int array obtained from bitmath into an array of
@@ -122,6 +74,10 @@ t_ull		*bitmath(char *input)
 	return (tmpull);
 }
 
+/*
+** Initalizes the piece struct.
+*/
+
 t_piece		make_piece(char *input, int label)
 {
 	int		i;
@@ -144,18 +100,24 @@ t_piece		make_piece(char *input, int label)
 	return (piece);
 }
 
-void		*freer(void *ptr)
+/*
+** Initializes i, max_buf, cur_buf, and label for the process_input function.
+*/
+
+static char	initializer(int *i, size_t *buf)
 {
-	free(ptr);
-	return (NULL);
+	*(i + 2) = 0;
+	*buf = PIECEBYTES * 26;
+	*(buf + 1) = 0;
+	return ('A');
 }
 
 /*
-** ops[] = { fd, ret, i }
+** ops[] = { vb, ret, i }
 ** buffs[] = { max_buf, cur_buf }
 */
 
-t_piece		*process_input(char *filename, t_puzz *legend)
+t_piece		*process_input(t_puzz *legend, int fd)
 {	
 	int		op[3];
 	size_t	buffs[2];
@@ -163,27 +125,21 @@ t_piece		*process_input(char *filename, t_puzz *legend)
 	t_piece	*pieces;
 	char	label;
 
-	op[2] = 0;
-	buffs[0] = PIECEBYTES * 26;
-	buffs[1] = 0;
-	label = 'A';
+	label = initializer(op, buffs);
 	legend->pnbr = 0;
 	if (!(pieces = (t_piece *)ft_memalloc(sizeof(t_piece) * (26 + 1))))
-		return (NULL);
-	if (!(op[0] = open_file(filename)))
 		return (NULL);
 	while ("pokemon go is dead")
 	{
 		buffs[1] += PIECEBYTES;
 		if (buffs[1] > buffs[0])
 			return (freer((void *)pieces));
-		op[1] = read(op[0], buffer, PIECEBYTES);
-		if (op[1] == -1 || op[1] == 0)
-			return (NULL);
-		if (is_valid_block(buffer) >= 0)
+		if ((op[1] = read(fd, buffer, PIECEBYTES)) == -1)
+			return (freer((void *)pieces));
+		if ((op[0] = is_valid_block(buffer)) >= 0)
 			pieces[op[2]++] = make_piece(buffer, label++);
-		else
-			return (NULL);
+		if (op[0] < 0 || op[1] == 0)
+			return (freer((void *)pieces));
 		legend->pnbr++;
 		if (op[1] == 20)
 			return (pieces);

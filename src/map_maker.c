@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 15:31:10 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/26 17:08:29 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 11:26:31 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,7 +85,7 @@ t_piece	*total_reset(t_piece *pieces, t_puzz l)
 ** and increments the square size if needed.
 */
 
-t_puzz	*initializer(t_piece *pieces, t_puzz *l)
+t_puzz	*solve_puzzle(t_piece *pieces, t_puzz *l)
 {
 	t_puzz	*solved;
 	int		pu;
@@ -105,6 +105,6 @@ t_puzz	*initializer(t_piece *pieces, t_puzz *l)
 	pieces = total_reset(pieces, *l);
 	ft_memdel((void *)&l->map);
 	l->sq_size++;
-	l = initializer(pieces, l);
+	l = solve_puzzle(pieces, l);
 	return (l);
 }

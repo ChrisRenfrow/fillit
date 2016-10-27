@@ -6,7 +6,7 @@
 #    By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/20 18:04:00 by crenfrow          #+#    #+#              #
-#    Updated: 2016/10/26 19:10:37 by crenfrow         ###   ########.fr        #
+#    Updated: 2016/10/27 11:26:54 by kdavis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -36,7 +36,7 @@ build/%.o: src/%.c | build
 
 rtest: $(NAME)
 	time (python tests/rand_test.py 26 > tests/randtestMAX.txt && \
-	./$(NAME) tests/randtestMAX.txt)
+	./$(NAME) tests/randtestMAX.txt) | tests/color_tets
 
 norme:
 	norminette $(SOURCES) $(INCDIR)
