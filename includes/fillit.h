@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/27 13:41:49 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/27 14:49:19 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,13 +85,13 @@ int					is_piece(char *input);
 int					ct_pieces(char *input);
 int					is_valid_block(char *input);
 void				init_blockdefine(void);
-int					init_protect(void **ptr, size_t size);
 
 /*
 ** main.c
 */
 t_ull				*shift_piece(t_ull *tmpull);
 t_piece				*read_pieces(char *filename, t_puzz *legend);
+int					init_protect(void **ptr, size_t size, int flag);
 void				*freer(void *ptr);
 
 #endif
