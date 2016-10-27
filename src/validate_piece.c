@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 18:03:53 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/27 14:30:20 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/27 15:19:29 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,6 +95,8 @@ int		is_valid_block(char *input)
 	//init_blockdefine();
 	if (input)
 	{
+		if (!check_nl_ct(input))
+			return (result);
 		ft_strchrrplc(input, '\n', '.');
 		input = ft_strctrim(input, '.');
 		result = is_piece(input);

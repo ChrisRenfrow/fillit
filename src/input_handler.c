@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/27 14:56:23 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/27 15:34:45 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,25 +103,30 @@ t_piece		make_piece(char *input, int label)
 ** Initializes i, max_buf, cur_buf, and label for the process_input function.
 */
 
-char	initializer(int *i, size_t *buf)
+int		initializer(int *i, size_t *buf, char *label)
 {
 	*(i + 2) = 0;
 	*buf = PIECEBYTES * 26;
 	*(buf + 1) = 0;
-	return ('A');
+	*label = 'A';
+	return (0);
 }
 
 int		check_nl_ct(char *input)
 {
 	int i;
+	int	counter;
 	
 	i = 0;
+	counter = 0;
 	while (input[i])
 	{
-		if (i % 5 == 4 && input[i] != '\n')
-			return (0);
+		if (input[i] == '.')
+			counter++;
 		i++;
 	}
+	if (counter != 12)
+		return (0);
 	return (1);
 }
 
@@ -138,8 +143,7 @@ t_piece		*process_input(t_puzz *legend, int fd)
 	t_piece	*pieces;
 	char	label;
 
-	label = initializer(op, buffs);
-	legend->pnbr = 0;
+	legend->pnbr = initializer(op, buffs, &label);
 	if (!(pieces = (t_piece *)ft_memalloc(sizeof(t_piece) * (26 + 1))))
 		return (NULL);
 	while ("pokemon go is dead")
@@ -149,8 +153,7 @@ t_piece		*process_input(t_puzz *legend, int fd)
 			return (freer((void *)pieces));
 		if ((op[1] = read(fd, buffer, PIECEBYTES)) == -1)
 			return (freer((void *)pieces));
-		if (!check_nl_ct(buffer))
-			return (freer((void *)pieces));
+		buffer[op[1]] = '\0';
 		if ((op[0] = is_valid_block(buffer)) >= 0)
 			pieces[op[2]++] = make_piece(buffer, label++);
 		if (op[0] < 0 || op[1] == 0)
