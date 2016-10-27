@@ -6,7 +6,7 @@
 #    By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/20 18:04:00 by crenfrow          #+#    #+#              #
-#    Updated: 2016/10/27 12:53:42 by kdavis           ###   ########.fr        #
+#    Updated: 2016/10/27 13:42:05 by kdavis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,8 @@ LIBDIR		= lib/
 INCDIR		= includes/
 FLAGS		= -Wall -Wextra -Werror
 CC			= gcc
+
+all: $(NAME)
 
 $(NAME): $(SOURCES) | $(OBJECTS)
 	$(CC) $(FLAGS) $(OBJECTS) -I $(INCDIR) -o $(NAME)
