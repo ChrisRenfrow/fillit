@@ -6,7 +6,7 @@
 #    By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/20 18:04:00 by crenfrow          #+#    #+#              #
-#    Updated: 2016/10/27 13:42:05 by kdavis           ###   ########.fr        #
+#    Updated: 2016/10/27 14:58:31 by kdavis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -69,4 +69,4 @@ re: fclean $(NAME)
 build:
 	mkdir build/
 
-.PHONY: clean fclean re
+.PHONY: all clean fclean re
