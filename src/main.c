@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 18:16:18 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/27 14:30:15 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/27 14:47:54 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,14 +76,24 @@ t_piece	*read_pieces(char *filename, t_puzz *legend)
 	return (pieces);
 }
 
-int 	init_protect(void **ptr, size_t size)
+/*
+** flag == 1: Check to see if the globals were malloced or not.
+** flag == 0: Print error and return 1.
+*/
+
+int		init_protect(void **ptr, size_t size, int flag)
 {
 	int i;
 
 	i = 0;
-	while(i < (int)size)
-		if (!ptr[i++])
-			return (0);
+	if (flag == 1)
+	{
+		while (i < (int)size)
+			if (!ptr[i++])
+				return (0);
+	}
+	else
+		ft_putendl("error");
 	return (1);
 }
 
@@ -91,25 +101,22 @@ int		main(int argc, char **argv)
 {
 	t_piece	*pieces;
 	t_puzz	legend;
-	int i;
+	int		i;
 
 	if (argc != 2)
 		ft_putendl("usage: ./fillit [file-name]");
 	else
 	{
-		init_blockdefine();	
-		if (!(init_protect((void **)g_blockdefine, 19)))
+		init_blockdefine();
+		if (!(init_protect((void **)g_blockdefine, 19, 1)))
 		{
 			i = 0;
 			while (i < 19)
-				freer(g_blockdefine[i++]);
-			return (1);
+				free(g_blockdefine[i++]);
+			return (init_protect((void **)g_blockdefine, 19, 0));
 		}
 		if (!(pieces = read_pieces(argv[1], &legend)))
-		{
-			ft_putendl("error");
-			return (1);
-		}
+			return (init_protect((void **)g_blockdefine, 19, 0));
 		legend.sq_size = ft_sqrt(4 * legend.pnbr);
 		solve_puzzle(pieces, &legend);
 		ft_memdel((void *)legend.map);
