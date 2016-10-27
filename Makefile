@@ -6,7 +6,7 @@
 #    By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/20 18:04:00 by crenfrow          #+#    #+#              #
-#    Updated: 2016/10/26 14:36:48 by crenfrow         ###   ########.fr        #
+#    Updated: 2016/10/26 19:10:37 by crenfrow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,7 +25,7 @@ OBJECTS		= $(addprefix build/, $(CFILES:.c=.o))
 LIBNAME		= ft
 LIBDIR		= lib/
 INCDIR		= includes/
-FLAGS		= -Wall -Wextra -Werror
+FLAGS		= -Wall -Wextra -Werror #-fsanitize=address
 CC			= gcc
 
 $(NAME): $(SOURCES) | $(OBJECTS)
@@ -38,13 +38,16 @@ rtest: $(NAME)
 	time (python tests/rand_test.py 26 > tests/randtestMAX.txt && \
 	./$(NAME) tests/randtestMAX.txt)
 
+norme:
+	norminette $(SOURCES) $(INCDIR)
+
 clean:
 	rm -rf build/
 
 fclean: clean
 	rm -rf $(NAME)
 
-re: fclean all
+re: fclean $(NAME)
 
 build:
 	mkdir build/
