@@ -6,13 +6,35 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/24 15:31:10 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/27 12:05:49 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/27 16:02:24 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
 #include <stdlib.h>
+
+/*
+** HAX
+*/
+
+int		check_nl_ct(char *input)
+{
+	int i;
+	int	counter;
+
+	i = 0;
+	counter = 0;
+	while (input[i])
+	{
+		if (input[i] == '.')
+			counter++;
+		i++;
+	}
+	if (counter != 12)
+		return (0);
+	return (1);
+}
 
 /*
 ** Sorts the pieces by the row in which they were placed on the map.

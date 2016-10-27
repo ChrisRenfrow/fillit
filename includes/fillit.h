@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/04 16:11:40 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/27 14:49:19 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 16:01:41 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ typedef	struct		s_piece
 /*
 ** map_maker.c functions
 */
+int					check_nl_ct(char *input);
 t_piece				*sort_pieces(t_piece *p, t_puzz l);
 t_puzz				*solve_puzzle(t_piece *pieces, t_puzz *l);
 t_piece				*total_reset(t_piece *pieces, t_puzz l);

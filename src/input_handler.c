@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/27 15:34:45 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 16:01:37 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,31 +103,13 @@ t_piece		make_piece(char *input, int label)
 ** Initializes i, max_buf, cur_buf, and label for the process_input function.
 */
 
-int		initializer(int *i, size_t *buf, char *label)
+int			initializer(int *i, size_t *buf, char *label)
 {
 	*(i + 2) = 0;
 	*buf = PIECEBYTES * 26;
 	*(buf + 1) = 0;
 	*label = 'A';
 	return (0);
-}
-
-int		check_nl_ct(char *input)
-{
-	int i;
-	int	counter;
-	
-	i = 0;
-	counter = 0;
-	while (input[i])
-	{
-		if (input[i] == '.')
-			counter++;
-		i++;
-	}
-	if (counter != 12)
-		return (0);
-	return (1);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/13 18:03:53 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/27 15:19:29 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 15:59:35 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	init_blockdefine(void)
 	g_blockdefine[16] = ft_strdup("#...##....#");
 	g_blockdefine[17] = ft_strdup("##....##");
 	g_blockdefine[18] = ft_strdup("#...##...#");
-	g_blockdefine[19] = 0;	
+	g_blockdefine[19] = 0;
 }
 
 char	*ft_strchrrplc(char *str, int c_a, int c_b)
@@ -92,7 +92,6 @@ int		is_valid_block(char *input)
 	int result;
 
 	result = -1;
-	//init_blockdefine();
 	if (input)
 	{
 		if (!check_nl_ct(input))
