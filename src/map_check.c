@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/17 10:26:52 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/18 19:31:16 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 12:10:00 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 ** border.
 */
 
-static int	check_bottom(t_piece p, t_puzz l)
+int	check_bottom(t_piece p, t_puzz l)
 {
 	int	i;
 
@@ -34,17 +34,14 @@ static int	check_bottom(t_piece p, t_puzz l)
 ** far right border.
 */
 
-static int	check_border(t_piece p, t_puzz l)
+int	check_border(t_piece p, t_puzz l)
 {
 	int	brd;
 	int	i;
 
 	brd = 1 << l.sq_size;
 	i = -1;
-/*	ft_putstr("Border value:"); //
-	ft_putnbr((int)brd);//
-	ft_putchar('\n');//
-*/	while (++i < 3)
+	while (++i < 3)
 		if (p.r[i] / brd != 0)
 			return (0);
 	return (1);
@@ -55,9 +52,9 @@ static int	check_border(t_piece p, t_puzz l)
 ** pieces that have been placed already.
 */
 
-static int	check_zone(t_piece p, t_ull *map, t_puzz l)
+int	check_zone(t_piece p, t_ull *map, t_puzz l)
 {
-	int	i;	
+	int	i;
 
 	i = -1;
 	while (++i < 4)
@@ -75,9 +72,6 @@ int	check_map(t_piece p, t_ull *map, t_puzz l)
 {
 	int	result;
 
-//	ft_putendl("10 checking if can paste");//
-	result = check_zone(p, map, l) * check_border(p, l) * check_bottom(p, l); 
-//	if (result == 0)
-//		ft_putendl("11 could not paste"); //
+	result = check_zone(p, map, l) * check_border(p, l) * check_bottom(p, l);
 	return (result);
 }

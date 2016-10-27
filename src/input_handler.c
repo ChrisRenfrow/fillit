@@ -6,88 +6,141 @@
 /*   By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/07 13:11:15 by crenfrow          #+#    #+#             */
-/*   Updated: 2016/10/18 22:37:05 by crenfrow         ###   ########.fr       */
+/*   Updated: 2016/10/27 11:32:11 by kdavis           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include <unistd.h>
-#include <stdlib.h>
-#include <fcntl.h>
 #include "libft.h"
 #include "fillit.h"
 
-int ft_strctchr(char *str, char c)
-{
-	int count;
+#define PIECEBYTES 21
 
-	count = 0;
-	while (*str)
+/*
+** Converts the int array obtained from bitmath into an array of
+** unsigned long longs where each index of the array represents
+** a row of the piece.
+*/
+
+t_ull		*ft_btoull(int *bin)
+{
+	t_ull	*ll;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	if (!(ll = (t_ull*)ft_memalloc(sizeof(t_ull) * 4)))
+		return (NULL);
+	while (i < 20)
 	{
-		if (*str == c)
-			count++;
-		str++;
+		if (i % 5 == 4)
+			j++;
+		else
+			ll[j] += bin[i] << ((i % 5) * bin[i]);
+		i++;
 	}
-	return (count);
+	return (ll);
 }
 
-int open_file(char *filename)
+/*
+** Creates an array of of 1's and 0's from the input to represent
+** the bitmap for each piece. Used in combination with ft_btoull to
+** return a temp ull array that will be used to load the pieces bitmap.
+*/
+
+t_ull		*bitmath(char *input)
 {
-	int fd;
-	fd = open(filename, O_RDONLY);
-	if (fd == -1)
+	int		*bin;
+	t_ull	*tmpull;
+	int		i;
+
+	i = 0;
+	if (!(bin = (int *)ft_memalloc(sizeof(int) * 20)))
+		return (NULL);
+	while (i < 20)
 	{
-		ft_putstr("File missing or invalid.\n");
-		return (0);
+		if (input[i] == '.')
+			bin[i++] = 0;
+		else if (input[i] == '#')
+			bin[i++] = 1;
 	}
-	else
-		return (fd);
+	tmpull = ft_btoull(bin);
+	ft_memdel((void *)&bin);
+	if (!(tmpull))
+		return (NULL);
+	tmpull = shift_piece(tmpull);
+	return (tmpull);
 }
 
-t_piece	*make_piece(char *input, int label)
+/*
+** Initalizes the piece struct.
+*/
+
+t_piece		make_piece(char *input, int label)
 {
-	(void)input;
-	t_piece *piece = (t_piece *)malloc(sizeof(t_piece));
-	piece->label = label;
-	piece->placed = 0;
+	int		i;
+	t_piece	piece;
+	t_ull	*tmpull;
+
+	tmpull = bitmath(input);
+	i = 0;
+	while (i < 4)
+	{
+		piece.r[i] = tmpull[i];
+		piece.a[i] = tmpull[i];
+		i++;
+	}
+	ft_memdel((void *)&tmpull);
+	piece.placed = 0;
+	piece.label = label;
+	piece.shift = 0;
+	piece.mrow = 0;
 	return (piece);
 }
 
-t_piece *process_input(char *filename)
-{
-	int 	fd;
-	int		ret;
-	int		in_ct;
-	size_t	max_buf;
-	size_t	cur_buf;
-	//char 	**input;
-	t_piece *pieces = NULL;
+/*
+** Initializes i, max_buf, cur_buf, and label for the process_input function.
+*/
 
-	ret = 1;
-	in_ct = 0;
-	max_buf = 546;
-	cur_buf = 0;
-	char *buffer = ft_memalloc(max_buf);
-	fd = open_file(filename);
-	if (fd == 0)
+static char	initializer(int *i, size_t *buf)
+{
+	*(i + 2) = 0;
+	*buf = PIECEBYTES * 26;
+	*(buf + 1) = 0;
+	return ('A');
+}
+
+/*
+** ops[] = { vb, ret, i }
+** buffs[] = { max_buf, cur_buf }
+*/
+
+t_piece		*process_input(t_puzz *legend, int fd)
+{
+	int		op[3];
+	size_t	buffs[2];
+	char	buffer[PIECEBYTES + 1];
+	t_piece	*pieces;
+	char	label;
+
+	label = initializer(op, buffs);
+	legend->pnbr = 0;
+	if (!(pieces = (t_piece *)ft_memalloc(sizeof(t_piece) * (26 + 1))))
 		return (NULL);
-	while (ret)
+	while ("pokemon go is dead")
 	{
-		cur_buf += 21;
-		if (max_buf <= cur_buf)
-		{
-			ft_putstr("Fuck you and all your pieces.\n");
-			free(buffer);
-			return (NULL);
-		}
-		ret = read(fd, buffer, 21);	
-		if (ret == -1)
-		{
-			ft_putstr("Read error occured.\n");
-			return (NULL);
-		}
-		ft_putstr(buffer);
+		buffs[1] += PIECEBYTES;
+		if (buffs[1] > buffs[0])
+			return (freer((void *)pieces));
+		if ((op[1] = read(fd, buffer, PIECEBYTES)) == -1)
+			return (freer((void *)pieces));
+		if ((op[0] = is_valid_block(buffer)) >= 0)
+			pieces[op[2]++] = make_piece(buffer, label++);
+		if (op[0] < 0 || op[1] == 0)
+			return (freer((void *)pieces));
+		legend->pnbr++;
+		if (op[1] == 20)
+			return (pieces);
 	}
-	//pieces = (t_piece *)ft_memset(pieces, 0, ct_pieces(buffer) + 1);
-	
-	return (pieces);
 }

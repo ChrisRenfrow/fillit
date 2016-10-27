@@ -5,15 +5,37 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2016/10/12 10:29:43 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/19 10:30:48 by kdavis           ###   ########.fr       */
+/*   Created: 2016/10/24 15:31:21 by kdavis            #+#    #+#             */
+/*   Updated: 2016/10/27 12:07:05 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
-#include <stdio.h> //DEEELEEETTEE
+#include <stdlib.h>
 
+/*
+** Checks to see if the piece values are at the right border of the puzzle.
+** if they are, move pieces back to far left as well as increment map
+** to the next row.
+*/
+
+t_puzz	*move_piece(t_piece *p, t_puzz *l)
+{
+	int i;
+
+	i = -1;
+	if (l->shift >= l->sq_size)
+	{
+		l->shift = 0;
+		l->mrow++;
+	}
+	else
+		l->shift++;
+	p[l->pu].mrow = l->mrow;
+	p[l->pu].shift = l->shift;
+	return (fit_piece(p, l));
+}
 
 /*
 ** Edit_map will either cut or paste a piece depending on the status.
@@ -21,136 +43,87 @@
 ** status = 0 indicates that the piece was cut from the map.
 */
 
-t_piece		edit_map(t_piece p, t_ull *map, t_puzz l, int status)
+t_puzz	*edit_map(t_piece *p, t_puzz *l, int status)
 {
-	int	printtest = 0;//
 	int	i;
 
 	i = -1;
+	if (status == 0)
+	{
+		l->pu--;
+		l->mrow = p[l->pu].mrow;
+		l->shift = p[l->pu].shift;
+	}
 	while (++i < 4)
-	{
-		map[l.mrow + i] = p.r[i] ^ map[l.mrow + i];
-//		ft_putnbr(p.r[i]);//
-//		ft_putchar(',');//
-	}
-//	ft_putchar('\n');//
-	p.placed = status;
-	if (p.placed)
-	{
-		l.po[0]++;
-		p.order = *l.po;
-	}
-	else
-		l.po[0]--;
-
-	ft_putendl("12 editing map");//
-	ft_putstr("1 = paste, 0 = reset: ");//
-	ft_putnbr(p.placed);//
-	ft_putchar('\n');//
-	while (printtest++ < l.sq_size)//
-	{
-		ft_putstr("reuslt:");//
-		print_row(*map++, l.sq_size);//
-		ft_putchar('\n');//
-	}
-	ft_putchar(p.label);//
-	ft_putnbr(p.order);//
-	ft_putchar('\n');//
-	return (p);
+		l->map[l->mrow + i] = p[l->pu].r[i] ^ l->map[l->mrow + i];
+	if (status == 0)
+		return (l);
+	l->pu++;
+	return (fit_piece(p, l));
 }
 
 /*
-** Reset pieces will move all unused pieces to the horizontal location that
-** the map was reset from. It will also set the g_shift to reflect the new
-** horizontal position of all pieces.
+** Starting_position determines where in the map to start trying to place
+** the next piece. Normally the starting position is at the top left of the
+** map unless the piece is a duplicate of an already placed piece. In that
+** case the piece starts after the already placed piece.
 */
 
-t_piece		*reset_pieces(t_piece *p, t_puzz l)
+t_puzz	*starting_position(t_piece *p, t_puzz *l)
 {
-	int	pu;
 	int	i;
-//	ft_putendl("Resetting pieces");//
-//	ft_putstr("puzzle.shift: ");//
-//	ft_putnbr(l.shift);//
-//	ft_putchar('\n'); //
+	int	pri;
+	int	counter;
 
-	pu = -1;
-	while (++pu < l.pnbr)
+	i = -1;
+	l->shift = 0;
+	l->mrow = 0;
+	while (++i < l->pnbr)
 	{
-		if (p[pu].placed == 0)
+		pri = -1;
+		counter = 0;
+		if (p[i].placed == 1)
+			while (++pri < 4)
+				if (p[l->pu].a[pri] == p[i].a[pri])
+					counter++;
+		if (counter == 4)
 		{
-			i = -1;
-			while (++i < 4)
-				p[pu].r[i] = p[pu].a[i] << l.shift;
+			l->shift = p[i].shift;
+			l->mrow = p[i].mrow;
 		}
 	}
-	return (p);
+	p[l->pu].shift = l->shift;
+	p[l->pu].mrow = l->mrow;
+	return (l);
 }
 
 /*
-** Main body of the recursive function.
-** 1. Selects first unused piece for checking.
-**			If there are no unused pieces, then YAY you did it, return solution.
-** 2. If the current number of empty blocks is smaller than the max then proceed 
-**		with the piece fitting process (otherwise return NULL))	
-**			2a. While we have pieces left, if current piece isn't used check it
-**					If piece can fit then place and move otherwise check next piece.
-**			2b. If no pieces can fit, then move anyways and increment eb counter.
+** Fit_piece works recursivley by finding the perfect position for each piece
+** in order. If a piece is pasted we move on to the next piece, if we can not
+** paste the piece then we move to the next position.
 */
 
-t_ull	*fit_pieces(t_piece *p, t_ull *map, int eb_nbr, t_puzz legend)
+t_puzz	*fit_piece(t_piece *p, t_puzz *l)
 {
-	t_ull	*tail;
-	int		pu;
-	int		pl;
+	t_puzz	*solved;
+	int		i;
 
-	pu = 0;
-	pl = 0;
-	while (pu < legend.pnbr)//
-		if (p[pu++].placed == 0)//
-			pl++;//
-//	ft_putendl("7");//
-	pu = 0;
-	while ((p[pu].placed) == 1)
-		if (++pu == legend.pnbr)
-			return (map);
-	ft_putstr("8: eb before check:");//
-	ft_putnbr(eb_nbr);//
-	ft_putstr(" max eb:");//
-	ft_putnbr(legend.eb_max);//
-	ft_putchar('\n');//
-	ft_putstr("current row: ");//
-	ft_putnbr(legend.mrow);//
-	ft_putchar('\n');//
-	while (pu < legend.pnbr && eb_nbr <= legend.eb_max)
+	if (l->pu == l->pnbr)
+		return (l);
+	l = starting_position(p, l);
+	i = -1;
+	while (++i < 4)
+		p[l->pu].r[i] = p[l->pu].a[i] << l->shift;
+	p[l->pu].placed = 1;
+	if (check_map(p[l->pu], l->map, *l))
 	{
-	//	ft_putendl("9");//
-		if ((p[pu].placed) != 1)
-		{
-			if ((check_map(p[pu], map, legend)))
-				p[pu] = edit_map(p[pu], map, legend, 1);
-			if (p[pu].placed == 1 || --pl == 0)
-			{
-	//			if (pl == 0)//
-	//				ft_putendl("moving to next space");//
-				if((tail = move_bits(p, map, eb_nbr, legend)))
-					return (tail);
-				if (p[pu].placed == 1)
-				{
-					p[pu] = edit_map(p[pu], map, legend, 0);
-					p = reset_pieces(p, legend); 
-				}
-			}
-		}
-		ft_putstr("13 bad piece ");//
-		ft_putchar(p[pu].label);//
-		ft_putstr(" Coordinates i:");//
-		ft_putnbr(legend.mrow);//
-		ft_putstr(" j:");//
-		ft_putnbr(legend.shift);//
-		ft_putchar('\n');//
-		pu++;
+		if ((solved = edit_map(p, l, 1)))
+			return (solved);
+		l = edit_map(p, l, 0);
 	}
-//	ft_putendl("Backtracking");
+	if ((check_bottom(p[l->pu], *l)) || (check_border(p[l->pu], *l)))
+		if ((solved = move_piece(p, l)))
+			return (solved);
+	p[l->pu].placed = 0;
 	return (NULL);
 }

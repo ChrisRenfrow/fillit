@@ -5,42 +5,51 @@
 #                                                     +:+ +:+         +:+      #
 #    By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
-#    Created: 2016/10/07 09:42:52 by crenfrow          #+#    #+#              #
-#    Updated: 2016/10/07 13:04:35 by crenfrow         ###   ########.fr        #
+#    Created: 2016/10/20 18:04:00 by crenfrow          #+#    #+#              #
+#    Updated: 2016/10/27 12:19:23 by crenfrow         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-NAME		= fillit.exe
-FILENAMES	= main.c	\
+NAME		= fillit
+FILENAMES 	= 	main			\
+				input_handler 	\
+				validate_piece 	\
+				map_maker		\
+				map_check		\
+				fit_pieces		\
+				print_solution	\
 
-SOURCES 	= $(addprefix src/, $(FILENAMES))
-BUILD 		= $(addprefix build/, $(FILENAMES:.c=.o))
-LIBNAME 	= ft
-LIBDIR 		= lib/
-INCLUDES	= includes/
-FLAGS 		= -Wall -Wextra -Werror #-fsanitize=address
-CC 			= gcc
+CFILES		= $(addsuffix .c, $(FILENAMES))
+SOURCES 	= $(addprefix src/, $(CFILES))
+OBJECTS		= $(addprefix build/, $(CFILES:.c=.o))
+LIBNAME		= ft
+LIBDIR		= lib/
+INCDIR		= includes/
+FLAGS		= -Wall -Wextra -Werror
+CC			= gcc
 
-all: $(NAME)
-
-$(NAME): $(SOURCES) | $(BUILD)
-		$(CC) $(FLAGS) $(SOURCES) -I $(INCLUDES) -o $(NAME) -L$(LIBDIR) -l$(LIBNAME)
+$(NAME): $(SOURCES) | $(OBJECTS)
+	$(CC) $(FLAGS) $(OBJECTS) -I $(INCDIR) -L $(LIBDIR) -l $(LIBNAME) -o $(NAME)
 
 build/%.o: src/%.c | build
-		$(CC) $(FLAGS) -I $(INCLUDES) -c $^ -o $@
+	$(CC) $(FLAGS) -I $(INCDIR) -c $^ -o $@
+
+rtest: $(NAME)
+	time (python tests/rand_test.py 26 > tests/randtestMAX.txt && \
+	./$(NAME) tests/randtestMAX.txt)
+
+norme:
+	norminette $(SOURCES) $(INCDIR)
 
 clean:
-		rm -rf build/
+	rm -rf build/
 
 fclean: clean
-		rm -rf $(NAME)
+	rm -rf $(NAME)
 
-run: all
-		./$(NAME)
-
-re: fclean all
+re: fclean $(NAME)
 
 build:
-		mkdir build/
+	mkdir build/
 
-.PHONY: all clean fclean re run norme
+.PHONY: clean fclean re

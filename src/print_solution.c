@@ -6,81 +6,102 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/18 15:35:55 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/19 09:54:23 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/27 12:02:11 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
 #include "fillit.h"
 
-t_piece	*sort_pieces(t_piece *p, t_puzz l)
-{
-	t_piece	temp;
-	int		count;
-	int		i;
+/*
+** If the first bit of mrow is 0 then '.' is printed and mrow is shifted.
+** col is also iterated to reflect movement in printing position.
+*/
 
-	count = 1;
-	while (count != 0)
+t_ull	print_empty(t_ull mrow, int *col, int *paste)
+{
+	if (!(mrow & 1))
 	{
-		count = 0;
-		i = -1;
-		while ((++i + 1) < l.pnbr)
-		{
-			if (p[i].order > p[i + 1].order)
-			{
-				temp = p[i];
-				p[i] = p[i + 1];
-				p[i + 1] = temp;
-				count++;
-			}
-		}
+		ft_putchar('.');
+		mrow = mrow >> 1;
+		(*col)++;
+		*paste = 1;
+	}
+	return (mrow);
+}
+
+/*
+** print_char prints the appropriate character.
+** 1. Establishes which row of the piece to print.
+** 2. Deletes any 0s preceeding a 1 in the piece row.
+** 3. Prints characters as long as the piece compares appropriatley to the map
+**	as well as its horizontal position in the puzzle.
+*/
+
+t_piece	print_char(t_piece p, t_ull *mrow, int *col, int *paste)
+{
+	int	pri;
+
+	pri = 0;
+	while (!(p.a[pri]) && pri < 3)
+		pri++;
+	while ((p.a[pri]) && ((~p.a[pri]) & 1))
+		p.a[pri] = p.a[pri] >> 1;
+	while ((p.a[pri] & *mrow) && (p.r[pri] & (1 << *col)))
+	{
+		ft_putchar(p.label);
+		p.a[pri] = p.a[pri] >> 1;
+		*mrow = *mrow >> 1;
+		p.placed = 1;
+		*paste = 1;
+		(*col)++;
 	}
 	return (p);
 }
 
+/*
+** print_reset sets the placed value of all pieces to 0.
+** Indicating that the piece has not been printed on this row yet.
+*/
+
+t_piece	*print_reset(t_piece *p, t_puzz l)
+{
+	int	pu;
+
+	pu = -1;
+	while (++pu < l.pnbr)
+		p[pu].placed = 0;
+	return (p);
+}
+
+/*
+** Prints the solution by comparing the anchor values of the pieces with map.
+** If the pieces match then we shift both map and anchor values to indicate that
+** the piece portion and map portion have been printed already.
+*/
+
 void	print_solution(t_piece *p, t_ull *map, t_puzz l)
 {
-	int	pi;//
-	int ai;//
-	int printtest = 0;//
-		l.mrow = -1;//
-		l.min_eb[0] = 10000;//
-		while (++l.mrow < l.sq_size)//
-			count_empty(map[l.mrow], l);//
-		ft_putendl("Square size");//
-		ft_putnbr(l.sq_size);//
-		ft_putchar('\n');//
-	pi = -1;//
-	while (++pi < l.pnbr)//
+	int		pu;
+	int		col;
+	int		row;
+	int		paste;
+
+	row = -1;
+	while (++row < l.sq_size)
 	{
-		ft_putnbr(p[pi].order);//
-		ft_putchar(p[pi].label);//
-		ft_putchar('\n');//
-	}
-	while (printtest++ < l.sq_size)//
-	{
-		ft_putstr("reuslt:");//
-		print_row(*map++, l.sq_size);//
-		ft_putchar('\n');//
-	}
-	ai = -1;//
-	while (++ai < l.pnbr)//
-	{
-		pi = -1;//
-		while (++pi < 4)//
+		col = 0;
+		pu = 0;
+		p = print_reset(p, l);
+		while (col < l.sq_size && pu < l.pnbr)
 		{
-			print_row(p[ai].r[pi], l.sq_size);//
-			ft_putchar('\n');//
+			map[row] = print_empty(map[row], &col, &paste);
+			if (p[pu].placed == 0)
+				p[pu] = print_char(p[pu], &map[row], &col, &paste);
+			pu++;
+			if (paste-- == 1)
+				pu = 0;
 		}
-		ft_putchar('\n');//
-	}
-	p = sort_pieces(p, l);
-	ft_putendl("After sorting:");
-	pi = -1;//
-	while (++pi < l.pnbr)//
-	{
-		ft_putnbr(p[pi].order);//
-		ft_putchar(p[pi].label);//
-		ft_putchar('\n');//
+		ft_putchar('\n');
 	}
 }
