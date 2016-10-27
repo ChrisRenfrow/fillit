@@ -6,7 +6,7 @@
 /*   By: kdavis <marvin@42.fr>                      +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2016/10/25 18:16:18 by kdavis            #+#    #+#             */
-/*   Updated: 2016/10/25 19:03:47 by kdavis           ###   ########.fr       */
+/*   Updated: 2016/10/26 14:20:11 by crenfrow         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	main(int argc, char **argv)
 	t_puzz	legend;
 
 	if (argc != 2)
-		ft_putendl("usage: ./fillit file");
+		ft_putendl("usage: ./fillit [file-name]");
 	else
 	{
 		if (!(pieces = process_input(argv[1], &legend)))
