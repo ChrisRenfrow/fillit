@@ -6,7 +6,7 @@
 #    By: crenfrow <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2016/10/20 18:04:00 by crenfrow          #+#    #+#              #
-#    Updated: 2016/10/27 12:19:23 by crenfrow         ###   ########.fr        #
+#    Updated: 2016/10/27 12:53:42 by kdavis           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,6 +18,21 @@ FILENAMES 	= 	main			\
 				map_check		\
 				fit_pieces		\
 				print_solution	\
+				ft_memalloc		\
+				ft_memdel		\
+				ft_putendl		\
+				ft_putchar		\
+				ft_strcmp		\
+				ft_strctrim		\
+				ft_strdup		\
+				ft_bzero		\
+				ft_memset		\
+				ft_strlen		\
+				ft_strsub		\
+				ft_strcpy		\
+				ft_putendl_fd	\
+				ft_strncpy		\
+				ft_strnew		\
 
 CFILES		= $(addsuffix .c, $(FILENAMES))
 SOURCES 	= $(addprefix src/, $(CFILES))
@@ -29,7 +44,7 @@ FLAGS		= -Wall -Wextra -Werror
 CC			= gcc
 
 $(NAME): $(SOURCES) | $(OBJECTS)
-	$(CC) $(FLAGS) $(OBJECTS) -I $(INCDIR) -L $(LIBDIR) -l $(LIBNAME) -o $(NAME)
+	$(CC) $(FLAGS) $(OBJECTS) -I $(INCDIR) -o $(NAME)
 
 build/%.o: src/%.c | build
 	$(CC) $(FLAGS) -I $(INCDIR) -c $^ -o $@
